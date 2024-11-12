@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.promptoven.profileservice.adaptor.infrastructure.mongo.document.ProfileDocument;
 import com.promptoven.profileservice.adaptor.infrastructure.mongo.document.ProfileDocument.ProfileStatus;
-import com.promptoven.profileservice.adaptor.infrastructure.mongo.document.ProfileDocument.ProfileVisibility;
 
 @Repository
 public interface ProfileMongoRepository extends MongoRepository<ProfileDocument, String> {

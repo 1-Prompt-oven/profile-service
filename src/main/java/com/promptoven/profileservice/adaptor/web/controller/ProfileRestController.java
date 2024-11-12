@@ -4,8 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.ProfileUpdateVO;
+import com.promptoven.profileservice.adaptor.web.controller.vo.out.MemberProfileVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileCountVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileVO;
+import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
 
 import lombok.RequiredArgsConstructor;
@@ -65,5 +67,41 @@ public class ProfileRestController {
 			@PathVariable String alarmId) {
 		profileUseCase.alarm(nickname, alarmId);
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/profile/nickname/{nickname}")
+	public ResponseEntity<ProfileVO> getProfileByNickname(@PathVariable String nickname) {
+		ProfileDTO profileDTO = profileUseCase.getProfile(nickname);
+		ProfileVO profileVO = ProfileVO.fromDTO(profileDTO);
+		
+		if (profileVO == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(profileVO);
+	}
+
+	@GetMapping("/profile/uuid/{memberUUID}")
+	public ResponseEntity<ProfileVO> getProfileByUUID(@PathVariable String memberUUID) {
+		ProfileDTO profileDTO = profileUseCase.getProfileByMemberUUID(memberUUID);
+		ProfileVO profileVO = ProfileVO.fromDTO(profileDTO);
+		
+		if (profileVO == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(profileVO);
+	}
+
+	@GetMapping("/member/{memberUUID}/profile-info")
+	public ResponseEntity<MemberProfileVO> getMemberProfileInfo(@PathVariable String memberUUID) {
+		ProfileDTO profileDTO = profileUseCase.getProfileByMemberUUID(memberUUID);
+		MemberProfileVO memberProfileVO = MemberProfileVO.fromDTO(profileDTO);
+		
+		if (memberProfileVO == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(memberProfileVO);
 	}
 }

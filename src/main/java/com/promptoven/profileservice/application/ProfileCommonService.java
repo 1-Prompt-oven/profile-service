@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
+import com.promptoven.profileservice.domain.Profile;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,27 @@ public class ProfileCommonService implements ProfileUseCase {
 	}
 
 	@Override
+	public void withdrawProfile(String memberUUID) {
+
+	}
+
+	@Override
+	public void banProfile(String memberUUID, String reason) {
+
+	}
+
+	@Override
+	public ProfileDTO getProfileByMemberUUID(String memberUUID) {
+		return null;
+	}
+
+	@Override
 	public Collection<ProfileDTO> getTopCreators() {
 		return List.of();
+	}
+
+	@Override
+	public void createProfile(Profile profile) {
+
 	}
 }

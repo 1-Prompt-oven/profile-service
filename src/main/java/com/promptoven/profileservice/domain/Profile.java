@@ -91,19 +91,26 @@ public class Profile {
 			.build();
 	}
 
-	// todo: null 기반 3항 연산자로 돌려도 되나? Nullable 걸면 그냥 들어가라 해도 알아서 돌아가려나? 모르겠어요.
 	public static Profile updateProfile(Profile oldProfile, @Nullable String XId, @Nullable String instagramId,
 		@Nullable String youtubeHandle, @Nullable String webLink, @Nullable String bio) {
 		return Profile.builder()
 			.memberUUID(oldProfile.getMemberUUID())
 			.nickname(oldProfile.getNickname())
-			.xId(null != XId ? XId : oldProfile.getXId())
-			.instagramId(null != instagramId ? instagramId : oldProfile.getInstagramId())
-			.youtubeHandle(null != youtubeHandle ? youtubeHandle : oldProfile.getYoutubeHandle())
-			.webLink(null != webLink ? webLink : oldProfile.getWebLink())
-			.bio(null != bio ? bio : oldProfile.getBio())
+			.xId(XId != null ? XId : oldProfile.getXId())
+			.instagramId(instagramId != null ? instagramId : oldProfile.getInstagramId())
+			.youtubeHandle(youtubeHandle != null ? youtubeHandle : oldProfile.getYoutubeHandle())
+			.webLink(webLink != null ? webLink : oldProfile.getWebLink())
+			.bio(bio != null ? bio : oldProfile.getBio())
 			.banner(oldProfile.getBanner())
 			.profileImage(oldProfile.getProfileImage())
+			.isCreator(oldProfile.isCreator())
+			.status(oldProfile.getStatus())
+			.visibility(oldProfile.getVisibility())
+			.followerCount(oldProfile.getFollowerCount())
+			.followingCount(oldProfile.getFollowingCount())
+			.bannedAt(oldProfile.getBannedAt())
+			.withdrawnAt(oldProfile.getWithdrawnAt())
+			.banReason(oldProfile.getBanReason())
 			.build();
 	}
 
@@ -133,6 +140,50 @@ public class Profile {
 			.bio(oldProfile.getBio())
 			.banner(oldProfile.getBanner())
 			.profileImage(profileImage)
+			.build();
+	}
+
+	public static Profile ban(Profile profile, String reason) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profile.getNickname())
+			.xId(profile.getXId())
+			.instagramId(profile.getInstagramId())
+			.youtubeHandle(profile.getYoutubeHandle())
+			.webLink(profile.getWebLink())
+			.bio(profile.getBio())
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.isCreator(profile.isCreator())
+			.status(ProfileStatus.BANNED)
+			.visibility(ProfileVisibility.HIDDEN)
+			.followerCount(profile.getFollowerCount())
+			.followingCount(profile.getFollowingCount())
+			.bannedAt(LocalDateTime.now())
+			.withdrawnAt(profile.getWithdrawnAt())
+			.banReason(reason)
+			.build();
+	}
+
+	public static Profile withdraw(Profile profile) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profile.getNickname())
+			.xId(profile.getXId())
+			.instagramId(profile.getInstagramId())
+			.youtubeHandle(profile.getYoutubeHandle())
+			.webLink(profile.getWebLink())
+			.bio(profile.getBio())
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.isCreator(profile.isCreator())
+			.status(ProfileStatus.WITHDRAWN)
+			.visibility(ProfileVisibility.HIDDEN)
+			.followerCount(profile.getFollowerCount())
+			.followingCount(profile.getFollowingCount())
+			.bannedAt(profile.getBannedAt())
+			.withdrawnAt(LocalDateTime.now())
+			.banReason(profile.getBanReason())
 			.build();
 	}
 

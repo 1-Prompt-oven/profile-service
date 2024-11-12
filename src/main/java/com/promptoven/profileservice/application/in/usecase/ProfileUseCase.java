@@ -3,6 +3,7 @@ package com.promptoven.profileservice.application.in.usecase;
 import java.util.Collection;
 
 import com.promptoven.profileservice.application.in.dto.ProfileDTO;
+import com.promptoven.profileservice.domain.Profile;
 
 public interface ProfileUseCase {
 
@@ -25,4 +26,12 @@ public interface ProfileUseCase {
 	void alarm(String nickname, String alarmId);
 
 	Collection<ProfileDTO> getTopCreators();
+
+	void createProfile(Profile profile);
+
+	void withdrawProfile(String memberUUID);
+
+	void banProfile(String memberUUID, String reason);
+
+	ProfileDTO getProfileByMemberUUID(String memberUUID);
 }

@@ -1,8 +1,12 @@
 package com.promptoven.profileservice.adaptor.web.controller.vo.out;
 
+import java.time.LocalDateTime;
+
 import org.springframework.lang.Nullable;
 
 import com.promptoven.profileservice.application.in.dto.ProfileDTO;
+import com.promptoven.profileservice.domain.Profile.ProfileStatus;
+import com.promptoven.profileservice.domain.Profile.ProfileVisibility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +33,16 @@ public class ProfileVO {
     private String banner;
     @Nullable
     private String profileImage;
+    
+    private boolean isCreator;
+    private int followerCount;
+    private int followingCount;
 
     public static ProfileVO fromDTO(ProfileDTO profileDTO) {
-        if (profileDTO == null) {
+        if (profileDTO == null || 
+            profileDTO.getStatus() == ProfileStatus.WITHDRAWN ||
+            (profileDTO.getStatus() == ProfileStatus.BANNED && profileDTO.getVisibility() == ProfileVisibility.HIDDEN) ||
+            (profileDTO.getVisibility() == ProfileVisibility.PRIVATE && !profileDTO.isCreator())) {
             return null;
         }
         
@@ -45,6 +56,9 @@ public class ProfileVO {
             .bio(profileDTO.getBio())
             .banner(profileDTO.getBanner())
             .profileImage(profileDTO.getProfileImage())
+            .isCreator(profileDTO.isCreator())
+            .followerCount(profileDTO.getFollowerCount())
+            .followingCount(profileDTO.getFollowingCount())
             .build();
     }
 }
