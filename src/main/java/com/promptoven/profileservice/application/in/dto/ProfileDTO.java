@@ -47,6 +47,15 @@ public class ProfileDTO {
 	@Nullable
 	private LocalDateTime withdrawnAt;
 	
+	@Nullable
+	private String hashTag;
+	@Nullable
+	private String email;
+	
+	private LocalDateTime createdAt;
+	private int viewerCount;
+	private int salesCount;
+	
 	public static ProfileDTO fromDomain(Profile profile) {
 		if (profile == null) return null;
 		
@@ -58,8 +67,8 @@ public class ProfileDTO {
 			.youtubeHandle(profile.getYoutubeHandle())
 			.webLink(profile.getWebLink())
 			.bio(profile.getBio())
-			.banner(profile.getBanner())
-			.profileImage(profile.getProfileImage())
+			.banner(profile.getBannerImageUrl())
+			.profileImage(profile.getAvatarImageUrl())
 			.isCreator(profile.isCreator())
 			.status(profile.getStatus())
 			.visibility(profile.getVisibility())
@@ -67,6 +76,11 @@ public class ProfileDTO {
 			.followingCount(profile.getFollowingCount())
 			.bannedAt(profile.getBannedAt())
 			.withdrawnAt(profile.getWithdrawnAt())
+			.hashTag(profile.getHashTag())
+			.email(profile.getEmail())
+			.createdAt(profile.getCreatedAt())
+			.viewerCount(profile.getViewerCount())
+			.salesCount(profile.getSalesCount())
 			.build();
 	}
 }

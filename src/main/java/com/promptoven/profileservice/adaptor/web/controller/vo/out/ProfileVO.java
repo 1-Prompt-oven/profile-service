@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.lang.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 import com.promptoven.profileservice.domain.Profile.ProfileStatus;
 import com.promptoven.profileservice.domain.Profile.ProfileVisibility;
@@ -20,23 +21,25 @@ public class ProfileVO {
     private String nickname;
     
     @Nullable
-    private String xId;
+    private String bannerImageUrl;
     @Nullable
-    private String instagramId;
+    private String avatarImageUrl;
     @Nullable
-    private String youtubeHandle;
-    @Nullable
-    private String webLink;
+    private String hashTag;
     @Nullable
     private String bio;
     @Nullable
-    private String banner;
-    @Nullable
-    private String profileImage;
+    private String email;
     
-    private boolean isCreator;
-    private int followerCount;
-    private int followingCount;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime joined;
+    
+    private int following;
+    private int follower;
+    private int viewer;
+    private int sales;
+    
+    private boolean isViewStatus;
 
     public static ProfileVO fromDTO(ProfileDTO profileDTO) {
         if (profileDTO == null || 
@@ -49,16 +52,17 @@ public class ProfileVO {
         return ProfileVO.builder()
             .memberUUID(profileDTO.getMemberUUID())
             .nickname(profileDTO.getNickname())
-            .xId(profileDTO.getXId())
-            .instagramId(profileDTO.getInstagramId())
-            .youtubeHandle(profileDTO.getYoutubeHandle())
-            .webLink(profileDTO.getWebLink())
+            .bannerImageUrl(profileDTO.getBanner())
+            .avatarImageUrl(profileDTO.getProfileImage())
+            .hashTag(profileDTO.getHashTag())
             .bio(profileDTO.getBio())
-            .banner(profileDTO.getBanner())
-            .profileImage(profileDTO.getProfileImage())
-            .isCreator(profileDTO.isCreator())
-            .followerCount(profileDTO.getFollowerCount())
-            .followingCount(profileDTO.getFollowingCount())
+            .email(profileDTO.getEmail())
+            .joined(profileDTO.getCreatedAt())
+            .following(profileDTO.getFollowingCount())
+            .follower(profileDTO.getFollowerCount())
+            .viewer(profileDTO.getViewerCount())
+            .sales(profileDTO.getSalesCount())
+            .isViewStatus(profileDTO.isCreator())
             .build();
     }
 }

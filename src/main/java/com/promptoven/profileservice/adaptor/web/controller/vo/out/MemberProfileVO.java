@@ -16,7 +16,15 @@ public class MemberProfileVO {
     private String nickname;
     
     @Nullable
-    private String profileImage;
+    private String avatarImageUrl;
+    @Nullable
+    private String hashTag;
+    
+    private int followerCount;
+    private int followingCount;
+    
+    @Nullable
+    private String bio;
 
     public static MemberProfileVO fromDTO(ProfileDTO profileDTO) {
         if (profileDTO == null) {
@@ -26,7 +34,11 @@ public class MemberProfileVO {
         return MemberProfileVO.builder()
             .memberUUID(profileDTO.getMemberUUID())
             .nickname(profileDTO.getNickname())
-            .profileImage(profileDTO.getProfileImage())
+            .avatarImageUrl(profileDTO.getProfileImage())
+            .hashTag(profileDTO.getHashTag())
+            .followerCount(profileDTO.getFollowerCount())
+            .followingCount(profileDTO.getFollowingCount())
+            .bio(profileDTO.getBio())
             .build();
     }
 } 

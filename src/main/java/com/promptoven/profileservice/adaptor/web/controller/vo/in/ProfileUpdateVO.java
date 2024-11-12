@@ -26,9 +26,13 @@ public class ProfileUpdateVO {
     @Nullable
     private String bio;
     @Nullable
-    private String banner;
+    private String bannerImageUrl;
     @Nullable
-    private String profileImage;
+    private String avatarImageUrl;
+    @Nullable
+    private String hashTag;
+    @Nullable
+    private String email;
 
     public ProfileDTO toDTO() {
         return ProfileDTO.builder()
@@ -39,8 +43,10 @@ public class ProfileUpdateVO {
             .youtubeHandle(this.youtubeHandle)
             .webLink(this.webLink)
             .bio(this.bio)
-            .banner(this.banner)
-            .profileImage(this.profileImage)
+            .bannerImageUrl(this.bannerImageUrl)
+            .avatarImageUrl(this.avatarImageUrl)
+            .hashTag(this.hashTag)
+            .email(this.email)
             .build();
     }
 }

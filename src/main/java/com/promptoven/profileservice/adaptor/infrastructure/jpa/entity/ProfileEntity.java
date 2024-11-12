@@ -51,8 +51,8 @@ public class ProfileEntity {
 			.youtubeHandle(profile.getYoutubeHandle())
 			.webLink(profile.getWebLink())
 			.bio(profile.getBio())
-			.banner(profile.getBanner())
-			.profileImage(profile.getProfileImage())
+			.banner(profile.getBannerImageUrl())
+			.profileImage(profile.getAvatarImageUrl())
 			.build();
 	}
 
@@ -69,8 +69,8 @@ public class ProfileEntity {
 			.youtubeHandle(youtubeHandle)
 			.webLink(webLink)
 			.bio(bio)
-			.banner(banner)
-			.profileImage(profileImage)
+			.bannerImageUrl(banner)
+			.avatarImageUrl(profileImage)
 			.build();
 	}
 }

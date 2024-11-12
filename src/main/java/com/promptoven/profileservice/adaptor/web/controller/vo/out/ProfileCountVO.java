@@ -14,6 +14,8 @@ import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 public class ProfileCountVO {
 	private int followerCount;
 	private int followingCount;
+	private int viewerCount;
+	private int salesCount;
 	
 	public static ProfileCountVO fromDTO(Object profileCount) {
 		if (profileCount instanceof ProfileDTO) {
@@ -21,6 +23,8 @@ public class ProfileCountVO {
 			return ProfileCountVO.builder()
 				.followerCount(dto.getFollowerCount())
 				.followingCount(dto.getFollowingCount())
+				.viewerCount(dto.getViewerCount())
+				.salesCount(dto.getSalesCount())
 				.build();
 		}
 		return null;

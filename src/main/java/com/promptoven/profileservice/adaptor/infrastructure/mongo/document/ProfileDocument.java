@@ -67,6 +67,16 @@ public class ProfileDocument {
     private LocalDateTime bannedAt;
     private LocalDateTime withdrawnAt;
     private String banReason;
+    
+    @Indexed(sparse = true)
+    private String hashTag;
+    
+    @Indexed(sparse = true)
+    private String email;
+    
+    @Indexed
+    private int viewerCount;
+    private int salesCount;
 
     public enum ProfileStatus {
         ACTIVE,
@@ -189,8 +199,8 @@ public class ProfileDocument {
             .youtubeHandle(profile.getYoutubeHandle())
             .webLink(profile.getWebLink())
             .bio(profile.getBio())
-            .banner(profile.getBanner())
-            .profileImage(profile.getProfileImage())
+            .banner(profile.getBannerImageUrl())
+            .profileImage(profile.getAvatarImageUrl())
             .isCreator(profile.isCreator())
             .status(ProfileStatus.valueOf(profile.getStatus().name()))
             .visibility(ProfileVisibility.valueOf(profile.getVisibility().name()))
@@ -199,6 +209,11 @@ public class ProfileDocument {
             .bannedAt(profile.getBannedAt())
             .withdrawnAt(profile.getWithdrawnAt())
             .banReason(profile.getBanReason())
+            .hashTag(profile.getHashTag())
+            .email(profile.getEmail())
+            .viewerCount(profile.getViewerCount())
+            .salesCount(profile.getSalesCount())
+            .createdAt(profile.getCreatedAt())
             .build();
     }
 
@@ -211,8 +226,8 @@ public class ProfileDocument {
             .youtubeHandle(newProfile.getYoutubeHandle())
             .webLink(newProfile.getWebLink())
             .bio(newProfile.getBio())
-            .banner(newProfile.getBanner())
-            .profileImage(newProfile.getProfileImage())
+            .banner(newProfile.getBannerImageUrl())
+            .profileImage(newProfile.getAvatarImageUrl())
             .isCreator(oldDoc.isCreator())
             .status(oldDoc.getStatus())
             .visibility(oldDoc.getVisibility())
@@ -221,6 +236,10 @@ public class ProfileDocument {
             .bannedAt(oldDoc.getBannedAt())
             .withdrawnAt(oldDoc.getWithdrawnAt())
             .banReason(oldDoc.getBanReason())
+            .hashTag(newProfile.getHashTag())
+            .email(newProfile.getEmail())
+            .viewerCount(oldDoc.getViewerCount())
+            .salesCount(oldDoc.getSalesCount())
             .createdAt(oldDoc.getCreatedAt())
             .build();
     }
@@ -280,8 +299,8 @@ public class ProfileDocument {
             .youtubeHandle(this.youtubeHandle)
             .webLink(this.webLink)
             .bio(this.bio)
-            .banner(this.banner)
-            .profileImage(this.profileImage)
+            .bannerImageUrl(this.banner)
+            .avatarImageUrl(this.profileImage)
             .isCreator(this.isCreator)
             .status(Profile.ProfileStatus.valueOf(this.status.name()))
             .visibility(Profile.ProfileVisibility.valueOf(this.visibility.name()))
@@ -290,6 +309,11 @@ public class ProfileDocument {
             .bannedAt(this.bannedAt)
             .withdrawnAt(this.withdrawnAt)
             .banReason(this.banReason)
+            .hashTag(this.hashTag)
+            .email(this.email)
+            .createdAt(this.createdAt)
+            .viewerCount(this.viewerCount)
+            .salesCount(this.salesCount)
             .build();
     }
 }
