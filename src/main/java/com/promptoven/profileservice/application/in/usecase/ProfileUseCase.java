@@ -23,4 +23,6 @@ public interface ProfileUseCase {
 	void alarm(String nickname);
 
 	void alarm(String nickname, String alarmId);
+
+	Collection<ProfileDTO> getTopCreators();
 }

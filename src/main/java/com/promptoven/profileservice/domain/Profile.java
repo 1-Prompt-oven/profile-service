@@ -1,5 +1,7 @@
 package com.promptoven.profileservice.domain;
 
+import java.time.LocalDateTime;
+
 import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
@@ -31,10 +33,47 @@ public class Profile {
 	@Nullable
 	private String profileImage;
 
-	public static Profile CreateProfile(String memberUUID, String nickname) {
+	private boolean isCreator;
+	private ProfileStatus status;
+	private ProfileVisibility visibility;
+	
+	private int followerCount;
+	private int followingCount;
+	
+	@Nullable
+	private LocalDateTime bannedAt;
+	@Nullable
+	private LocalDateTime withdrawnAt;
+	@Nullable
+	private String banReason;
+
+	public enum ProfileStatus {
+		ACTIVE,
+		BANNED,
+		WITHDRAWN
+	}
+
+	public enum ProfileVisibility {
+		PUBLIC,
+		PRIVATE,
+		HIDDEN
+	}
+
+	public boolean isAccessible() {
+		return status == ProfileStatus.ACTIVE &&
+			(visibility == ProfileVisibility.PUBLIC || 
+			(visibility == ProfileVisibility.PRIVATE && isCreator));
+	}
+
+	public static Profile createProfile(String memberUUID, String nickname, boolean isCreator) {
 		return Profile.builder()
 			.memberUUID(memberUUID)
 			.nickname(nickname)
+			.isCreator(isCreator)
+			.status(ProfileStatus.ACTIVE)
+			.visibility(isCreator ? ProfileVisibility.PUBLIC : ProfileVisibility.PRIVATE)
+			.followerCount(0)
+			.followingCount(0)
 			.build();
 	}
 

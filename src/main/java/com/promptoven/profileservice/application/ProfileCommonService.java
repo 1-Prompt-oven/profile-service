@@ -60,4 +60,9 @@ public class ProfileCommonService implements ProfileUseCase {
 	public void alarm(String nickname, String alarmId) {
 
 	}
+
+	@Override
+	public Collection<ProfileDTO> getTopCreators() {
+		return List.of();
+	}
 }
