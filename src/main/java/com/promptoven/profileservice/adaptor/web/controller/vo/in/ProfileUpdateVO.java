@@ -43,8 +43,8 @@ public class ProfileUpdateVO {
             .youtubeHandle(this.youtubeHandle)
             .webLink(this.webLink)
             .bio(this.bio)
-            .bannerImageUrl(this.bannerImageUrl)
-            .avatarImageUrl(this.avatarImageUrl)
+            .banner(this.bannerImageUrl)
+            .profileImage(this.avatarImageUrl)
             .hashTag(this.hashTag)
             .email(this.email)
             .build();

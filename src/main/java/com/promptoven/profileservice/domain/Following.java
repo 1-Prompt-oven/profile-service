@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class following {
+public class Following {
 
 	private String follower;
 	private String followee;
@@ -21,16 +21,16 @@ public class following {
 	@Nullable
 	private LocalDateTime UnfollowDate;
 
-	public static following CreateFollowing(String follower, String followee) {
-		return following.builder()
+	public static Following CreateFollowing(String follower, String followee) {
+		return Following.builder()
 			.follower(follower)
 			.followee(followee)
 			.FollowDate(LocalDateTime.now())
 			.build();
 	}
 
-	public static following Unfollow(following oldFollowing) {
-		return following.builder()
+	public static Following Unfollow(Following oldFollowing) {
+		return Following.builder()
 			.follower(oldFollowing.getFollower())
 			.followee(oldFollowing.getFollowee())
 			.FollowDate(oldFollowing.getFollowDate())

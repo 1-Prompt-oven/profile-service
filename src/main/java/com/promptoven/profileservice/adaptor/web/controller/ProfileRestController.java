@@ -104,4 +104,6 @@ public class ProfileRestController {
 		
 		return ResponseEntity.ok(memberProfileVO);
 	}
+
+	// todo: request param: memberUUID, response: memberNickname + profileImageUrl
 }

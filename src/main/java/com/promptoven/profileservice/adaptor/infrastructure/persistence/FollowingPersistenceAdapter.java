@@ -9,6 +9,7 @@ import com.promptoven.profileservice.adaptor.infrastructure.mongo.document.Follo
 import com.promptoven.profileservice.adaptor.infrastructure.mongo.repository.FollowMongoRepository;
 import com.promptoven.profileservice.adaptor.infrastructure.mongo.repository.ProfileMongoRepository;
 import com.promptoven.profileservice.application.out.call.FollowingPersistence;
+import com.promptoven.profileservice.domain.Following;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,8 @@ public class FollowingPersistenceAdapter implements FollowingPersistence {
     private final ProfileMongoRepository profileMongoRepository;
 
     @Override
-    public void follow(String profileId, String followerId) {
+    public void save(Following following) {
+        String profileId = following.getFollower();
         profileMongoRepository.findByMemberUUIDAndNotWithdrawn(profileId)
             .ifPresent(profile -> {
                 profile.addFollower(followerId);

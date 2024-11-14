@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
+import com.promptoven.profileservice.application.out.call.FollowingPersistence;
+import com.promptoven.profileservice.domain.Following;
 import com.promptoven.profileservice.domain.Profile;
 
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ProfileCommonService implements ProfileUseCase {
 
+	private final FollowingPersistence followingPersistence;
+
 	@Override
 	public void follow(String profileId, String followerId) {
-		// TODO Auto-generated method stub
+		Following following = Following.CreateFollowing(profileId, followerId);
+		followingPersistence.save(following);
 	}
 
 	@Override

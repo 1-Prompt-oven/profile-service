@@ -18,7 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 public class EventSubscriberByKafka {
 
     private final ProfileUseCase profileUseCase;
-
+/*
+@KafkaListener(topics = "member-created", containerFactory = "simpleKafkaListenerContainerFactory") : String Deserializer listener
+@KafkaListener(topics = "member-created", containerFactory = "kafkaListenerContainerFactory") : Json Deserializer listener
+* */
     @KafkaListener(topics = "member-created")
     public void handleMemberCreated(MemberCreatedEvent event) {
         log.info("Received member created event: {}", event);

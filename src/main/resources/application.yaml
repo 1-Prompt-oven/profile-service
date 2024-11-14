@@ -2,11 +2,64 @@ spring:
   application:
     name: profile-service
   config:
-    import: "optional:configserver:http://localhost:8888"
+    import:
+      - classpath:/eventTopic.yaml
+
+---
+#application-prod.yaml
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import:
+        - classpath:/eventTopic.yaml
+        - "optional:configserver:http://config-server:8888"
+  datasource:
+    url: jdbc:mysql://localhost:3306/profile
+    username: root
+    password: 12342
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/profile_service?authSource=admin
+      auto-index-creation:  false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    consumer:
+      group-id: profile-service
   cloud:
     config:
-      uri: http://localhost:8888
+      name: profile-service,eventTopic
       fail-fast: false
+server:
+  port: 8080
+  shutdown: graceful
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+---
+#application-local.yaml
+spring:
+  config:
+    activate:
+      on-profile: local
+    import:
+      - classpath:/eventTopic.yaml
   datasource:
     url: jdbc:mysql://localhost:3306/profile
     username: root
@@ -22,7 +75,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  kafka:  
+  kafka:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: profile-service-group
@@ -41,3 +94,4 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
