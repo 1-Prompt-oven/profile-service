@@ -4,6 +4,23 @@ spring:
   config:
     import:
       - classpath:/eventTopic.yaml
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  nullable-request-parameter-enabled: true
+  security-shcemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  openapi:
+    paths:
+      /v1/member/**:
+        security:
+          - bearerAuth: [ ]
+
 
 ---
 #application-prod.yaml
@@ -12,8 +29,8 @@ spring:
     activate:
       on-profile: prod
     import:
-        - classpath:/eventTopic.yaml
-        - "optional:configserver:http://config-server:8888"
+      - classpath:/eventTopic.yaml
+      - "optional:configserver:http://config-server:8888"
   datasource:
     url: jdbc:mysql://localhost:3306/profile
     username: root
@@ -22,7 +39,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://mongodb:27017/profile_service?authSource=admin
-      auto-index-creation:  false
+      auto-index-creation: false
   jpa:
     hibernate:
       ddl-auto: update
@@ -63,10 +80,10 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/profile
     username: root
-    password: 12342
+    password: 1234
   data:
     mongodb:
-      uri: mongodb://localhost:27017/profile_service?authSource=admin
+      uri: mongodb://root:1234@localhost:27017/profile_service?directConnection=true&authSource=admin
       auto-index-creation: true
   jpa:
     hibernate:
@@ -76,10 +93,13 @@ spring:
       hibernate:
         format_sql: true
   kafka:
-    bootstrap-servers: localhost:9092
+    text-bootstrap-servers: localhost:9092
     consumer:
       group-id: profile-service-group
       auto-offset-reset: earliest
+  cloud:
+    config:
+      enabled: false
 
 server:
   port: 0

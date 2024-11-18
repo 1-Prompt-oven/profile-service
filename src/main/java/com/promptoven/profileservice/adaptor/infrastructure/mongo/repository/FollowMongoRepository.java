@@ -9,5 +9,8 @@ import com.promptoven.profileservice.adaptor.infrastructure.mongo.document.Follo
 
 public interface FollowMongoRepository extends MongoRepository<FollowDocument, String> {
 	Optional<FollowDocument> findByFollowerIdAndFollowingId(String followerId, String followingId);
+
+	Optional<FollowDocument> findByFollowerIdAndIsActiveTrue(String followerId);
+
 	List<FollowDocument> findByFollowingIdAndIsActiveTrue(String followingId);
 }

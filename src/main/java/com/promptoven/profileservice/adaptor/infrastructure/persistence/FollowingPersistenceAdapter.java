@@ -19,54 +19,54 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class FollowingPersistenceAdapter implements FollowingPersistence {
 
-    private final FollowMongoRepository followMongoRepository;
-    private final ProfileMongoRepository profileMongoRepository;
+	private final FollowMongoRepository followMongoRepository;
+	private final ProfileMongoRepository profileMongoRepository;
 
-    @Override
-    public void save(Following following) {
-        String profileId = following.getFollower();
-        profileMongoRepository.findByMemberUUIDAndNotWithdrawn(profileId)
-            .ifPresent(profile -> {
-                profile.addFollower(followerId);
-                profileMongoRepository.save(profile);
+	@Override
+	public void save(Following following) {
+		String profileId = following.getFollower();
+		profileMongoRepository.findByMemberUUIDAndNotWithdrawn(profileId)
+			.ifPresent(profile -> {
+				profile.addFollower(profileId);
+				profileMongoRepository.save(profile);
 
-                FollowDocument followDoc = followMongoRepository.findByFollowerIdAndFollowingId(followerId, profileId)
-                    .map(FollowDocument::refollow)
-                    .orElseGet(() -> FollowDocument.createFollow(followerId, profileId));
-                followMongoRepository.save(followDoc);
-            });
-    }
+				FollowDocument followDoc = followMongoRepository.findByFollowerIdAndFollowingId(profileId, profileId)
+					.map(FollowDocument::refollow)
+					.orElseGet(() -> FollowDocument.createFollow(profileId, profileId));
+				followMongoRepository.save(followDoc);
+			});
+	}
 
-    @Override
-    public void unfollow(String nickname, String followerId) {
-        profileMongoRepository.findByNicknameAndNotWithdrawn(nickname)
-            .ifPresent(profile -> {
-                profile.removeFollower(followerId);
-                profileMongoRepository.save(profile);
+	@Override
+	public void unfollow(String nickname, String followerId) {
+		profileMongoRepository.findByNicknameAndNotWithdrawn(nickname)
+			.ifPresent(profile -> {
+				profile.removeFollower(followerId);
+				profileMongoRepository.save(profile);
 
-                followMongoRepository.findByFollowerIdAndFollowingId(followerId, profile.getMemberUUID())
-                    .map(FollowDocument::unfollow)
-                    .ifPresent(followMongoRepository::save);
-            });
-    }
+				followMongoRepository.findByFollowerIdAndFollowingId(followerId, profile.getMemberUUID())
+					.map(FollowDocument::unfollow)
+					.ifPresent(followMongoRepository::save);
+			});
+	}
 
-    @Override
-    public List<String> getFollowers(String nickname) {
-        return profileMongoRepository.findByNicknameAndNotWithdrawn(nickname)
-            .map(profile -> followMongoRepository.findByFollowingIdAndIsActiveTrue(profile.getMemberUUID())
-                .stream()
-                .map(FollowDocument::getFollowerId)
-                .collect(Collectors.toList()))
-            .orElse(List.of());
-    }
+	@Override
+	public List<String> getFollowers(String nickname) {
+		return profileMongoRepository.findByNicknameAndNotWithdrawn(nickname)
+			.map(profile -> followMongoRepository.findByFollowingIdAndIsActiveTrue(profile.getMemberUUID())
+				.stream()
+				.map(FollowDocument::getFollowerId)
+				.collect(Collectors.toList()))
+			.orElse(List.of());
+	}
 
-    @Override
-    public List<String> getFollowing(String nickname) {
-        return profileMongoRepository.findByNicknameAndNotWithdrawn(nickname)
-            .map(profile -> followMongoRepository.findByFollowerIdAndIsActiveTrue(profile.getMemberUUID())
-                .stream()
-                .map(FollowDocument::getFollowingId)
-                .collect(Collectors.toList()))
-            .orElse(List.of());
-    }
+	@Override
+	public List<String> getFollowing(String nickname) {
+		return profileMongoRepository.findByNicknameAndNotWithdrawn(nickname)
+			.map(profile -> followMongoRepository.findByFollowerIdAndIsActiveTrue(profile.getMemberUUID())
+				.stream()
+				.map(FollowDocument::getFollowingId)
+				.collect(Collectors.toList()))
+			.orElse(List.of());
+	}
 } 
