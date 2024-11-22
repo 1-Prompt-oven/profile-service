@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.lang.Nullable;
 
+import com.promptoven.profileservice.domain.dto.FollowingModelDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,10 +23,10 @@ public class Following {
 	@Nullable
 	private LocalDateTime UnfollowDate;
 
-	public static Following CreateFollowing(String follower, String followee) {
+	public static Following CreateFollowing(FollowingModelDTO followingModelDTO) {
 		return Following.builder()
-			.follower(follower)
-			.followee(followee)
+			.follower(followingModelDTO.getFollowerID())
+			.followee(followingModelDTO.getFolloweeID())
 			.FollowDate(LocalDateTime.now())
 			.build();
 	}

@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.domain;
+package com.promptoven.profileservice.domain.dto;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FollowList {
+public class FollowListModelDTO {
 
 	private String memberUUID;
 
-	private List<ProfileShort> follows;
+	private List<ProfileShortModelDTO> follows;
 }

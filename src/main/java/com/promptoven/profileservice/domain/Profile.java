@@ -2,6 +2,10 @@ package com.promptoven.profileservice.domain;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.mongodb.core.mapping.Unwrapped.Nullable;
+
+import com.promptoven.profileservice.domain.dto.ProfileModelDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,55 +17,31 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Profile {
 	private String memberUUID;
-	private String nickname;
-	private String xId;
-	private String instagramId;
-	private String youtubeHandle;
-	private String webLink;
+	@Nullable
+	private String banner;
+	@Nullable
+	private String profileImage;
+	@Nullable
+	private String hashtag;
+	@Nullable
 	private String bio;
-	private String bannerImageUrl;
-	private String avatarImageUrl;
-	private String hashTag;
+	@Nullable
 	private String email;
-	
-	private boolean isCreator;
-	private ProfileStatus status;
-	private ProfileVisibility visibility;
-	
-	private int followerCount;
-	private int followingCount;
-	private int viewerCount;
-	private int salesCount;
-	
-	private LocalDateTime bannedAt;
-	private LocalDateTime withdrawnAt;
+	private String nickname;
 	private LocalDateTime createdAt;
-	private String banReason;
 
-	public enum ProfileStatus {
-		ACTIVE,
-		BANNED,
-		WITHDRAWN
-	}
-
-	public enum ProfileVisibility {
-		PUBLIC,
-		PRIVATE,
-		HIDDEN
-	}
-
-	public static Profile createProfile(String memberUUID, String nickname, boolean isCreator) {
+	public static Profile createProfile(ProfileModelDTO profileModelDTO) {
 		return Profile.builder()
-			.memberUUID(memberUUID)
-			.nickname(nickname)
-			.isCreator(isCreator)
-			.status(ProfileStatus.ACTIVE)
-			.visibility(isCreator ? ProfileVisibility.PUBLIC : ProfileVisibility.PRIVATE)
-			.followerCount(0)
-			.followingCount(0)
-			.viewerCount(0)
-			.salesCount(0)
+			.memberUUID(profileModelDTO.getMemberUUID())
+			.nickname(profileModelDTO.getNickname())
 			.createdAt(LocalDateTime.now())
+
+			.banner(null != profileModelDTO.getBanner() ? profileModelDTO.getBanner() : null)
+			.profileImage(null != profileModelDTO.getProfileImage() ? profileModelDTO.getProfileImage() : null)
+			.hashtag(null != profileModelDTO.getHashtag() ? profileModelDTO.getHashtag() : null)
+			.bio(null != profileModelDTO.getBio() ? profileModelDTO.getBio() : null)
+			.email(null != profileModelDTO.getEmail() ? profileModelDTO.getEmail() : null)
+
 			.build();
 	}
 }

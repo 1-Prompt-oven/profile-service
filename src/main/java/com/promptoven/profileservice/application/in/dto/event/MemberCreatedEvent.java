@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.domain;
+package com.promptoven.profileservice.application.in.dto.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProfileShort {
-
+public class MemberCreatedEvent {
 	private String memberUUID;
 	private String nickname;
-	private String avatarImageUrl;
-}
+	private boolean isCreator;
+} 

@@ -9,18 +9,8 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+    display-request-duration: true
   nullable-request-parameter-enabled: true
-  security-shcemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-  openapi:
-    paths:
-      /v1/member/**:
-        security:
-          - bearerAuth: [ ]
-
 
 ---
 #application-prod.yaml

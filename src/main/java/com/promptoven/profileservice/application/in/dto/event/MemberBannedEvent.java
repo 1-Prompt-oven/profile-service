@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.adaptor.infrastructure.kafka.event;
+package com.promptoven.profileservice.application.in.dto.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberWithdrawnEvent {
-    private String memberUUID;
+public class MemberBannedEvent {
+	private String memberUUID;
+	private String reason;
 } 

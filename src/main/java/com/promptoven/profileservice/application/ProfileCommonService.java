@@ -10,6 +10,7 @@ import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
 import com.promptoven.profileservice.application.out.call.FollowingPersistence;
 import com.promptoven.profileservice.domain.Following;
 import com.promptoven.profileservice.domain.Profile;
+import com.promptoven.profileservice.domain.dto.FollowingModelDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,11 @@ public class ProfileCommonService implements ProfileUseCase {
 
 	@Override
 	public void follow(String profileId, String followerId) {
-		Following following = Following.CreateFollowing(profileId, followerId);
+		FollowingModelDTO followingModelDTO = FollowingModelDTO.builder()
+			.FollowerID(followerId)
+			.FolloweeID(profileId)
+			.build();
+		Following following = Following.CreateFollowing(followingModelDTO);
 		followingPersistence.save(following);
 	}
 
