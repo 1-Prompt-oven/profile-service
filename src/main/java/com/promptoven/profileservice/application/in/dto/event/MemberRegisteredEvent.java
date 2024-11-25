@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberCreatedEvent {
+public class MemberRegisteredEvent {
 	private String memberUUID;
 	private String nickname;
-	private boolean isCreator;
-} 
+}

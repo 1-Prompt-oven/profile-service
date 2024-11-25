@@ -29,6 +29,8 @@ public class Profile {
 	private String email;
 	private String nickname;
 	private LocalDateTime createdAt;
+	private boolean isWithdrew;
+	private boolean isBanned;
 
 	public static Profile createProfile(ProfileModelDTO profileModelDTO) {
 		return Profile.builder()
@@ -41,6 +43,104 @@ public class Profile {
 			.hashtag(null != profileModelDTO.getHashtag() ? profileModelDTO.getHashtag() : null)
 			.bio(null != profileModelDTO.getBio() ? profileModelDTO.getBio() : null)
 			.email(null != profileModelDTO.getEmail() ? profileModelDTO.getEmail() : null)
+
+			.isWithdrew(false)
+			.isBanned(false)
+
+			.build();
+	}
+
+	public static boolean isViewable(Profile profile) {
+		return !(profile.isWithdrew() || profile.isBanned());
+	}
+
+	public static Profile acceptWithdraw(Profile profile) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profile.getNickname())
+			.createdAt(profile.getCreatedAt())
+
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.hashtag(profile.getHashtag())
+			.bio(profile.getBio())
+			.email(profile.getEmail())
+
+			.isWithdrew(true)
+			.isBanned(profile.isBanned())
+
+			.build();
+	}
+
+	public static Profile banProfile(Profile profile, String reason) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profile.getNickname())
+			.createdAt(profile.getCreatedAt())
+
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.hashtag(profile.getHashtag())
+			.bio(profile.getBio())
+			.email(profile.getEmail())
+
+			.isWithdrew(profile.isWithdrew())
+			.isBanned(true)
+
+			.build();
+	}
+
+	public static Profile updateProfile(Profile profile, ProfileModelDTO profileModelDTO) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profileModelDTO.getNickname())
+			.createdAt(profile.getCreatedAt())
+
+			.banner(null != profileModelDTO.getBanner() ? profileModelDTO.getBanner() : profile.getBanner())
+			.profileImage(null != profileModelDTO.getProfileImage() ? profileModelDTO.getProfileImage() :
+				profile.getProfileImage())
+			.hashtag(null != profileModelDTO.getHashtag() ? profileModelDTO.getHashtag() : profile.getHashtag())
+			.bio(null != profileModelDTO.getBio() ? profileModelDTO.getBio() : profile.getBio())
+			.email(null != profileModelDTO.getEmail() ? profileModelDTO.getEmail() : profile.getEmail())
+
+			.isWithdrew(profile.isWithdrew())
+			.isBanned(profile.isBanned())
+
+			.build();
+	}
+
+	public static Profile updateNickname(Profile profile, String nickname) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(nickname)
+			.createdAt(profile.getCreatedAt())
+
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.hashtag(profile.getHashtag())
+			.bio(profile.getBio())
+			.email(profile.getEmail())
+
+			.isWithdrew(profile.isWithdrew())
+			.isBanned(profile.isBanned())
+
+			.build();
+	}
+
+	public static Profile unban(Profile profile) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profile.getNickname())
+			.createdAt(profile.getCreatedAt())
+
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.hashtag(profile.getHashtag())
+			.bio(profile.getBio())
+			.email(profile.getEmail())
+
+			.isWithdrew(profile.isWithdrew())
+			.isBanned(false)
 
 			.build();
 	}

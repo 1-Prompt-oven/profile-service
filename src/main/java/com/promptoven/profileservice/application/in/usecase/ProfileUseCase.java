@@ -2,8 +2,8 @@ package com.promptoven.profileservice.application.in.usecase;
 
 import java.util.Collection;
 
-import com.promptoven.profileservice.application.in.dto.ProfileDTO;
-import com.promptoven.profileservice.domain.Profile;
+import com.promptoven.profileservice.application.service.dto.ProfileDTO;
+import com.promptoven.profileservice.domain.dto.ProfileModelDTO;
 
 public interface ProfileUseCase {
 
@@ -27,7 +27,7 @@ public interface ProfileUseCase {
 
 	Collection<ProfileDTO> getTopCreators();
 
-	void createProfile(Profile profile);
+	void createProfile(ProfileModelDTO profileModelDTO);
 
 	void withdrawProfile(String memberUUID);
 

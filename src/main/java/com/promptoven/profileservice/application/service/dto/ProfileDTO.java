@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.domain.dto;
+package com.promptoven.profileservice.application.service.dto;
 
 import java.time.LocalDateTime;
 
@@ -11,12 +11,12 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @Builder
-public class ProfileModelDTO {
+public class ProfileDTO {
+
 	private final String memberUUID;
 	private final String nickname;
-
-	@Nullable
 	private final LocalDateTime createdAt;
+
 	@Nullable
 	private final String banner;
 	@Nullable

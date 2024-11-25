@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileVO;
-import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
+import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class ProfileManageRestController {
 	public ResponseEntity<List<ProfileVO>> getFollowers(@PathVariable String nickname) {
 		List<ProfileVO> followers = profileUseCase.getFollowers(nickname)
 			.stream()
-			.map(profileDTO -> ProfileVO.fromDTO((ProfileDTO) profileDTO))
+			.map(profileDTO -> ProfileVO.fromDTO((ProfileDTO)profileDTO))
 			.collect(Collectors.toList());
 		return ResponseEntity.ok(followers);
 	}
@@ -37,7 +37,7 @@ public class ProfileManageRestController {
 	public ResponseEntity<List<ProfileVO>> getFollowing(@PathVariable String nickname) {
 		List<ProfileVO> following = profileUseCase.getFollowing(nickname)
 			.stream()
-			.map(profileDTO -> ProfileVO.fromDTO((ProfileDTO) profileDTO))
+			.map(profileDTO -> ProfileVO.fromDTO((ProfileDTO)profileDTO))
 			.collect(Collectors.toList());
 		return ResponseEntity.ok(following);
 	}
@@ -46,7 +46,7 @@ public class ProfileManageRestController {
 	public ResponseEntity<List<ProfileVO>> getTopCreators() {
 		List<ProfileVO> topCreators = profileUseCase.getTopCreators()
 			.stream()
-			.map(profileDTO -> ProfileVO.fromDTO((ProfileDTO) profileDTO))
+			.map(profileDTO -> ProfileVO.fromDTO((ProfileDTO)profileDTO))
 			.collect(Collectors.toList());
 		return ResponseEntity.ok(topCreators);
 	}

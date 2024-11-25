@@ -13,8 +13,8 @@ import com.promptoven.profileservice.adaptor.web.controller.vo.in.ProfileUpdateV
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.MemberProfileVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileCountVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileVO;
-import com.promptoven.profileservice.application.in.dto.ProfileDTO;
 import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
+import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
