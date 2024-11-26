@@ -2,8 +2,6 @@ package com.promptoven.profileservice.adaptor.web.controller.vo.out;
 
 import org.springframework.lang.Nullable;
 
-import com.promptoven.profileservice.application.service.dto.ProfileDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,19 +24,4 @@ public class MemberProfileVO {
 	@Nullable
 	private String bio;
 
-	public static MemberProfileVO fromDTO(ProfileDTO profileDTO) {
-		if (profileDTO == null) {
-			return null;
-		}
-
-		return MemberProfileVO.builder()
-			.memberUUID(profileDTO.getMemberUUID())
-			.nickname(profileDTO.getNickname())
-			.avatarImageUrl(profileDTO.getProfileImage())
-			.hashTag(profileDTO.getHashTag())
-			.followerCount(profileDTO.getFollowerCount())
-			.followingCount(profileDTO.getFollowingCount())
-			.bio(profileDTO.getBio())
-			.build();
-	}
-} 
+}

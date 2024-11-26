@@ -17,9 +17,18 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+import com.promptoven.profileservice.application.in.dto.event.MemberBanEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberNicknameUpdateEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberRegisterEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberUnbanEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberWithdrawEvent;
+import com.promptoven.profileservice.application.in.dto.event.SettlementFirstCreateEvent;
+
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,15 +49,7 @@ public class KafkaConfig {
 		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-		return new DefaultKafkaProducerFactory<>(configProps);
-	}
-
-	@Bean
-	public ProducerFactory<String, String> simpleProducerFactory() {
-		Map<String, Object> configProps = new HashMap<>();
-		configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-		configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		configProps.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
 		return new DefaultKafkaProducerFactory<>(configProps);
 	}
 
@@ -57,46 +58,65 @@ public class KafkaConfig {
 		return new KafkaTemplate<>(producerFactory());
 	}
 
-	@Bean
-	public KafkaTemplate<String, String> simpleKafkaTemplate() {
-		return new KafkaTemplate<>(simpleProducerFactory());
-	}
-
-	@Bean
-	public ConsumerFactory<String, Object> consumerFactory() {
+	private <T> ConsumerFactory<String, T> createTypedConsumerFactory(Class<T> targetType) {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-		return new DefaultKafkaConsumerFactory<>(props);
+
+		// Configure key deserializer with error handling
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+		props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
+
+		// Configure value deserializer with error handling
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+		props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
+
+		JsonDeserializer<T> jsonDeserializer = new JsonDeserializer<>(targetType);
+		jsonDeserializer.addTrustedPackages("*");
+
+		return new DefaultKafkaConsumerFactory<>(
+			props,
+			new StringDeserializer(),
+			jsonDeserializer
+		);
 	}
 
-	@Bean
-	public ConsumerFactory<String, String> simpleConsumerFactory() {
-		Map<String, Object> props = new HashMap<>();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-		props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-		return new DefaultKafkaConsumerFactory<>(props);
-	}
-
-	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, Object> factory =
+	private <T> ConcurrentKafkaListenerContainerFactory<String, T> createTypedContainerFactory(
+		Class<T> targetType) {
+		ConcurrentKafkaListenerContainerFactory<String, T> factory =
 			new ConcurrentKafkaListenerContainerFactory<>();
-		factory.setConsumerFactory(consumerFactory());
+		factory.setConsumerFactory(createTypedConsumerFactory(targetType));
 		return factory;
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, String> simpleKafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, String> factory =
-			new ConcurrentKafkaListenerContainerFactory<>();
-		factory.setConsumerFactory(simpleConsumerFactory());
-		return factory;
+	public ConcurrentKafkaListenerContainerFactory<String, SettlementFirstCreateEvent> settlementFirstCreateListenerFactory() {
+		return createTypedContainerFactory(SettlementFirstCreateEvent.class);
 	}
-} 
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, MemberBanEvent> memberBanListenerFactory() {
+		return createTypedContainerFactory(MemberBanEvent.class);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, MemberWithdrawEvent> memberWithdrawListenerFactory() {
+		return createTypedContainerFactory(MemberWithdrawEvent.class);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, MemberRegisterEvent> memberRegisterListenerFactory() {
+		return createTypedContainerFactory(MemberRegisterEvent.class);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, MemberUnbanEvent> memberUnbanListenerFactory() {
+		return createTypedContainerFactory(MemberUnbanEvent.class);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, MemberNicknameUpdateEvent> memberNicknameUpdateListenerFactory() {
+		return createTypedContainerFactory(MemberNicknameUpdateEvent.class);
+	}
+
+}

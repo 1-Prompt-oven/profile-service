@@ -31,6 +31,7 @@ public class Profile {
 	private LocalDateTime createdAt;
 	private boolean isWithdrew;
 	private boolean isBanned;
+	private boolean isCreator;
 
 	public static Profile createProfile(ProfileModelDTO profileModelDTO) {
 		return Profile.builder()
@@ -46,6 +47,7 @@ public class Profile {
 
 			.isWithdrew(false)
 			.isBanned(false)
+			.isCreator(false)
 
 			.build();
 	}
@@ -68,6 +70,7 @@ public class Profile {
 
 			.isWithdrew(true)
 			.isBanned(profile.isBanned())
+			.isCreator(profile.isCreator())
 
 			.build();
 	}
@@ -86,6 +89,7 @@ public class Profile {
 
 			.isWithdrew(profile.isWithdrew())
 			.isBanned(true)
+			.isCreator(profile.isCreator())
 
 			.build();
 	}
@@ -105,6 +109,7 @@ public class Profile {
 
 			.isWithdrew(profile.isWithdrew())
 			.isBanned(profile.isBanned())
+			.isCreator(profile.isCreator())
 
 			.build();
 	}
@@ -123,6 +128,7 @@ public class Profile {
 
 			.isWithdrew(profile.isWithdrew())
 			.isBanned(profile.isBanned())
+			.isCreator(profile.isCreator())
 
 			.build();
 	}
@@ -141,6 +147,26 @@ public class Profile {
 
 			.isWithdrew(profile.isWithdrew())
 			.isBanned(false)
+			.isCreator(profile.isCreator())
+
+			.build();
+	}
+
+	public static Profile promotedToCreator(Profile profile) {
+		return Profile.builder()
+			.memberUUID(profile.getMemberUUID())
+			.nickname(profile.getNickname())
+			.createdAt(profile.getCreatedAt())
+
+			.banner(profile.getBanner())
+			.profileImage(profile.getProfileImage())
+			.hashtag(profile.getHashtag())
+			.bio(profile.getBio())
+			.email(profile.getEmail())
+
+			.isWithdrew(profile.isWithdrew())
+			.isBanned(profile.isBanned())
+			.isCreator(true)
 
 			.build();
 	}

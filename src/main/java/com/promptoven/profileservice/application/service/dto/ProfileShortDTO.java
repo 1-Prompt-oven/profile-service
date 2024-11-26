@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.domain.dto;
+package com.promptoven.profileservice.application.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProfileShortModelDTO {
+public class ProfileShortDTO {
 
 	private String memberUUID;
 	private String nickname;

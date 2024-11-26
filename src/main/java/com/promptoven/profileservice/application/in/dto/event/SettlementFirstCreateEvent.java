@@ -6,10 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class MemberRegisteredEvent {
+public class SettlementFirstCreateEvent {
+
 	private String memberUUID;
-	private String nickname;
+
 }

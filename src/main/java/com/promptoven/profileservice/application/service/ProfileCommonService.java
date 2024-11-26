@@ -66,7 +66,7 @@ public class ProfileCommonService
 		// return profilePersistence.getProfileCountByNickname(nickname);
 		return null;
 	}
-	
+
 	public void withdrawProfile(String memberUUID) {
 		// Profile profile = profilePersistence.getProfileByMemberUUID(memberUUID);
 		// profilePersistence.SaveProfile(profileDomainDTOMapper.toDTO(Profile.withdrawProfile(profile)));

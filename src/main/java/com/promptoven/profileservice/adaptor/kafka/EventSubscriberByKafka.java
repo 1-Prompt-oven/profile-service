@@ -3,11 +3,12 @@ package com.promptoven.profileservice.adaptor.kafka;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import com.promptoven.profileservice.application.in.dto.event.MemberBannedEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberRegisteredEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberWithdrawnEvent;
-import com.promptoven.profileservice.application.in.usecase.ProfileUseCase;
-import com.promptoven.profileservice.domain.dto.ProfileModelDTO;
+import com.promptoven.profileservice.application.in.dto.event.MemberBanEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberNicknameUpdateEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberRegisterEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberUnbanEvent;
+import com.promptoven.profileservice.application.in.dto.event.MemberWithdrawEvent;
+import com.promptoven.profileservice.application.in.dto.event.SettlementFirstCreateEvent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,31 +18,36 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class EventSubscriberByKafka {
 
-	private final ProfileUseCase profileUseCase;
+	// private final ProfileUseCase profileUseCase;
 
-	/*
-	@KafkaListener(topics = "member-created", containerFactory = "simpleKafkaListenerContainerFactory") : String Deserializer listener
-	@KafkaListener(topics = "member-created", containerFactory = "kafkaListenerContainerFactory") : Json Deserializer listener
-	* */
-	@KafkaListener(topics = "${member-register-event}")
-	public void handleMemberCreated(MemberRegisteredEvent event) {
-		log.info("Received member created event: {}", event);
-		ProfileModelDTO profileModelDTO = ProfileModelDTO.builder()
-			.memberUUID(event.getMemberUUID())
-			.nickname(event.getNickname())
-			.build();
-		profileUseCase.createProfile(profileModelDTO);
+	@KafkaListener(topics = "${settlement-first-create-event}", containerFactory = "settlementFirstCreateListenerFactory")
+	public void settlementFirstCreateEvent(SettlementFirstCreateEvent settlementFirstCreateEvent) {
+		log.info("Received settlement first create event: {}", settlementFirstCreateEvent);
 	}
 
-	@KafkaListener(topics = "member-withdrawn")
-	public void handleMemberWithdrawn(MemberWithdrawnEvent event) {
-		log.info("Received member withdrawn event: {}", event);
-		profileUseCase.withdrawProfile(event.getMemberUUID());
+	@KafkaListener(topics = "${member-ban-event}", containerFactory = "memberBanListenerFactory")
+	public void memberBanEvent(MemberBanEvent memberBanEvent) {
+		log.info("Received member ban event: {}", memberBanEvent);
 	}
 
-	@KafkaListener(topics = "member-banned")
-	public void handleMemberBanned(MemberBannedEvent event) {
-		log.info("Received member banned event: {}", event);
-		profileUseCase.banProfile(event.getMemberUUID(), event.getReason());
+	@KafkaListener(topics = "${member-unban-event}", containerFactory = "memberUnbanListenerFactory")
+	public void memberUnbanEvent(MemberUnbanEvent memberUnbanEvent) {
+		log.info("Received member unban event: {}", memberUnbanEvent);
 	}
+
+	@KafkaListener(topics = "${member-nickname-update-event}", containerFactory = "memberNicknameUpdateListenerFactory")
+	public void memberNicknameUpdateEvent(MemberNicknameUpdateEvent memberNicknameUpdateEvent) {
+		log.info("Received member nickname update event: {}", memberNicknameUpdateEvent);
+	}
+
+	@KafkaListener(topics = "${member-register-event}", containerFactory = "memberRegisterListenerFactory")
+	public void memberRegisterEvent(MemberRegisterEvent memberRegisterEvent) {
+		log.info("Received member register event: {}", memberRegisterEvent);
+	}
+
+	@KafkaListener(topics = "${member-withdraw-event}", containerFactory = "memberWithdrawListenerFactory")
+	public void memberWithdrawEvent(MemberWithdrawEvent memberWithdrawEvent) {
+		log.info("Received member withdraw event: {}", memberWithdrawEvent);
+	}
+
 } 

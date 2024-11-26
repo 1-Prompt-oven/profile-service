@@ -2,8 +2,6 @@ package com.promptoven.profileservice.adaptor.web.controller.vo.in;
 
 import org.springframework.lang.Nullable;
 
-import com.promptoven.profileservice.application.service.dto.ProfileDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,19 +32,4 @@ public class ProfileUpdateVO {
 	@Nullable
 	private String email;
 
-	public ProfileDTO toDTO() {
-		return ProfileDTO.builder()
-			.memberUUID(this.memberUUID)
-			.nickname(this.nickname)
-			.xId(this.xId)
-			.instagramId(this.instagramId)
-			.youtubeHandle(this.youtubeHandle)
-			.webLink(this.webLink)
-			.bio(this.bio)
-			.banner(this.bannerImageUrl)
-			.profileImage(this.avatarImageUrl)
-			.hashTag(this.hashTag)
-			.email(this.email)
-			.build();
-	}
 }

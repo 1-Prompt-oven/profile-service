@@ -5,9 +5,6 @@ import java.time.LocalDateTime;
 import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.promptoven.profileservice.application.service.dto.ProfileDTO;
-import com.promptoven.profileservice.domain.Profile.ProfileStatus;
-import com.promptoven.profileservice.domain.Profile.ProfileVisibility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,30 +37,5 @@ public class ProfileVO {
 	private int sales;
 
 	private boolean isViewStatus;
-
-	public static ProfileVO fromDTO(ProfileDTO profileDTO) {
-		if (profileDTO == null ||
-			profileDTO.getStatus() == ProfileStatus.WITHDRAWN ||
-			(profileDTO.getStatus() == ProfileStatus.BANNED && profileDTO.getVisibility() == ProfileVisibility.HIDDEN)
-			||
-			(profileDTO.getVisibility() == ProfileVisibility.PRIVATE && !profileDTO.isCreator())) {
-			return null;
-		}
-
-		return ProfileVO.builder()
-			.memberUUID(profileDTO.getMemberUUID())
-			.nickname(profileDTO.getNickname())
-			.bannerImageUrl(profileDTO.getBanner())
-			.avatarImageUrl(profileDTO.getProfileImage())
-			.hashTag(profileDTO.getHashTag())
-			.bio(profileDTO.getBio())
-			.email(profileDTO.getEmail())
-			.joined(profileDTO.getCreatedAt())
-			.following(profileDTO.getFollowingCount())
-			.follower(profileDTO.getFollowerCount())
-			.viewer(profileDTO.getViewerCount())
-			.sales(profileDTO.getSalesCount())
-			.isViewStatus(profileDTO.isCreator())
-			.build();
-	}
+	
 }
