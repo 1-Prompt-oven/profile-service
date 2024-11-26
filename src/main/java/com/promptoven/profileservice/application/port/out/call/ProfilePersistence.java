@@ -1,6 +1,7 @@
 package com.promptoven.profileservice.application.port.out.call;
 
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
+import java.util.List;
 
 public interface ProfilePersistence {
 
@@ -11,4 +12,6 @@ public interface ProfilePersistence {
 	void update(ProfileDTO profileDTO);
 
 	String getProfileID(String nickname);
+
+	List<String> getAllProfileIDs();
 }

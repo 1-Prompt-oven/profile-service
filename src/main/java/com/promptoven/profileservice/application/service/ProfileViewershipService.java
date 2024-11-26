@@ -1,5 +1,6 @@
 package com.promptoven.profileservice.application.service;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.promptoven.profileservice.application.port.in.usecase.ProfileViewershipUsecase;
@@ -38,6 +39,17 @@ public class ProfileViewershipService implements ProfileViewershipUsecase {
 		Long accumulatedCount = profileViewershipMemory.getAndResetViewCount(profileId);
 		if (accumulatedCount > 0) {
 			profileStatisticsPersistence.addProfileViewCount(profileId, accumulatedCount);
+		}
+	}
+
+	@Scheduled(fixedRate = 60000 * 60) // Runs every 1 hour
+	public void applyAllProfileViewCounts() {
+		log.info("Starting scheduled profile view count application");
+		try {
+			profilePersistence.getAllProfileIDs().forEach(this::applyViewCounts);
+			log.info("Completed scheduled profile view count application");
+		} catch (Exception e) {
+			log.error("Error during scheduled profile view count application", e);
 		}
 	}
 }

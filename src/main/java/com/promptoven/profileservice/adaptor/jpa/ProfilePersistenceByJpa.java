@@ -7,6 +7,9 @@ import com.promptoven.profileservice.adaptor.jpa.repository.ProfileRepository;
 import com.promptoven.profileservice.application.port.out.call.ProfilePersistence;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,5 +39,10 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 	public String getProfileID(String nickname) {
 		ProfileEntity profileEntity = profileRepository.findByNickname(nickname);
 		return profileEntity.getMemberUUID();
+	}
+
+	@Override
+	public List<String> getAllProfileIDs() {
+		return profileRepository.findAll().stream().map(ProfileEntity::getMemberUUID).collect(Collectors.toList());
 	}
 }
