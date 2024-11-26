@@ -9,8 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.promptoven.profileservice.adaptor.web.controller.mapper.FollowingRequestMapper;
+import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileResponseMapper;
 import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileUpdateRequestMapper;
+import com.promptoven.profileservice.adaptor.web.controller.vo.in.FollowRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.ProfileUpdateRequestVO;
+import com.promptoven.profileservice.adaptor.web.controller.vo.in.UnfollowRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileResponseVO;
 import com.promptoven.profileservice.application.port.in.usecase.FollowingUsecase;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
@@ -31,16 +35,16 @@ public class ProfileRestController {
 	@PostMapping("/member/profile/follow/{nickname}")
 	public ResponseEntity<Void> follow(
 		@PathVariable String nickname,
-		@RequestBody String followerId) {
-		followingUsecase.follow(nickname, followerId);
+		@RequestBody FollowRequestVO followRequestVO) {
+		followingUsecase.follow(FollowingRequestMapper.toFollowRequestDTO(followRequestVO, nickname));
 		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/member/profile/unfollow/{nickname}")
 	public ResponseEntity<Void> unfollow(
 		@PathVariable String nickname,
-		@RequestBody String followerId) {
-		followingUsecase.unfollow(nickname, followerId);
+		@RequestBody UnfollowRequestVO unfollowRequestVO) {
+		followingUsecase.unfollow(FollowingRequestMapper.toUnfollowRequestDTO(unfollowRequestVO, nickname));
 		return ResponseEntity.ok().build();
 	}
 
@@ -51,34 +55,10 @@ public class ProfileRestController {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/profile/{nickname}")
-	public ResponseEntity<ProfileResponseVO> getProfile(@PathVariable String nickname) {
-		return ResponseEntity.ok(ProfileResponseVO.fromDTO(profileUseCase.getProfile(nickname)));
-	}
-
-	@GetMapping("/profile/{nickname}/count")
-	public ResponseEntity<ProfileCountVO> getProfileCount(@PathVariable String nickname) {
-		return ResponseEntity.ok(ProfileCountVO.fromDTO(profileUseCase.getProfileCount(nickname)));
-	}
-
-	@PostMapping("/profile/{nickname}/alarm/all")
-	public ResponseEntity<Void> alarmAll(@PathVariable String nickname) {
-		profileUseCase.alarm(nickname);
-		return ResponseEntity.ok().build();
-	}
-
-	@PostMapping("/profile/{nickname}/alarm/{alarmId}")
-	public ResponseEntity<Void> alarmSpecific(
-		@PathVariable String nickname,
-		@PathVariable String alarmId) {
-		profileUseCase.alarm(nickname, alarmId);
-		return ResponseEntity.ok().build();
-	}
-
 	@GetMapping("/profile/nickname/{nickname}")
 	public ResponseEntity<ProfileResponseVO> getProfileByNickname(@PathVariable String nickname) {
-		ProfileDTO profileDTO = profileUseCase.getProfile(nickname);
-		ProfileResponseVO profileResponseVO = ProfileResponseVO.fromDTO(profileDTO);
+		ProfileDTO profileDTO = profileUseCase.getByNickname(nickname);
+		ProfileResponseVO profileResponseVO = ProfileResponseMapper.toVO(profileDTO);
 
 		if (profileResponseVO == null) {
 			return ResponseEntity.notFound().build();
@@ -89,8 +69,8 @@ public class ProfileRestController {
 
 	@GetMapping("/profile/uuid/{memberUUID}")
 	public ResponseEntity<ProfileResponseVO> getProfileByUUID(@PathVariable String memberUUID) {
-		ProfileDTO profileDTO = profileUseCase.getProfileByMemberUUID(memberUUID);
-		ProfileResponseVO profileResponseVO = ProfileResponseVO.fromDTO(profileDTO);
+		ProfileDTO profileDTO = profileUseCase.get(memberUUID);
+		ProfileResponseVO profileResponseVO = ProfileResponseMapper.toVO(profileDTO);
 
 		if (profileResponseVO == null) {
 			return ResponseEntity.notFound().build();
@@ -99,17 +79,17 @@ public class ProfileRestController {
 		return ResponseEntity.ok(profileResponseVO);
 	}
 
-	@GetMapping("/member/{memberUUID}/profile-info")
-	public ResponseEntity<MemberProfileVO> getMemberProfileInfo(@PathVariable String memberUUID) {
-		ProfileDTO profileDTO = profileUseCase.getProfileByMemberUUID(memberUUID);
-		MemberProfileVO memberProfileVO = MemberProfileVO.fromDTO(profileDTO);
+	@GetMapping("/profile/nickname/{nickname}/following")
+	public ResponseEntity<ProfileResponseVO> getFollowingByNickname(@PathVariable String nickname) {
+		followingUsecase.getFollowing(nickname);
 
-		if (memberProfileVO == null) {
-			return ResponseEntity.notFound().build();
-		}
-
-		return ResponseEntity.ok(memberProfileVO);
+		return ResponseEntity.ok(null);
 	}
 
-	// todo: request param: memberUUID, response: memberNickname + profileImageUrl
+	@GetMapping("/profile/nickname/{nickname}/follower")
+	public ResponseEntity<ProfileResponseVO> getFollowerByNickname(@PathVariable String nickname) {
+		followingUsecase.getFollowers(nickname);
+
+		return ResponseEntity.ok(null);
+	}
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.promptoven.profileservice.application.port.in.dto.FollowRequestDTO;
+import com.promptoven.profileservice.application.port.in.dto.UnfollowRequestDTO;
 import com.promptoven.profileservice.application.port.in.usecase.FollowingUsecase;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
@@ -16,12 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 public class FollowingService implements FollowingUsecase {
 
 	@Override
-	public void follow(String follower, String followee) {
+	public void follow(FollowRequestDTO followRequestDTO) {
 
 	}
 
 	@Override
-	public void unfollow(String follower, String followee) {
+	public void unfollow(UnfollowRequestDTO unfollowRequestDTO) {
 
 	}
 
