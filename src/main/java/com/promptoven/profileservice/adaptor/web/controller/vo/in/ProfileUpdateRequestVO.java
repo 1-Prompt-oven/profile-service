@@ -9,27 +9,18 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileUpdateVO {
+public class ProfileUpdateRequestVO {
 	private String memberUUID;
-	private String nickname;
+	private String bannerImageUrl;
+	private String avatarImageUrl;
 
 	@Nullable
-	private String xId;
-	@Nullable
-	private String instagramId;
-	@Nullable
-	private String youtubeHandle;
-	@Nullable
-	private String webLink;
+	private String hashtag;
 	@Nullable
 	private String bio;
 	@Nullable
-	private String bannerImageUrl;
-	@Nullable
-	private String avatarImageUrl;
-	@Nullable
-	private String hashTag;
-	@Nullable
 	private String email;
+
+	private String nickname;
 
 }

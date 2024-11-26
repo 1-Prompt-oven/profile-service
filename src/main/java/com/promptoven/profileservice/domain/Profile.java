@@ -75,7 +75,7 @@ public class Profile {
 			.build();
 	}
 
-	public static Profile banProfile(Profile profile, String reason) {
+	public static Profile banProfile(Profile profile) {
 		return Profile.builder()
 			.memberUUID(profile.getMemberUUID())
 			.nickname(profile.getNickname())

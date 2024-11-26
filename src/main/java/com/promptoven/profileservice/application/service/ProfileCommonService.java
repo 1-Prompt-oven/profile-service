@@ -1,77 +1,50 @@
 package com.promptoven.profileservice.application.service;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.promptoven.profileservice.application.service.dto.FollowingDTO;
+import com.promptoven.profileservice.application.port.in.dto.ProfileUpdateRequestDTO;
+import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
-import com.promptoven.profileservice.application.service.dto.mapper.FollowingDomainDTOMapper;
-import com.promptoven.profileservice.application.service.dto.mapper.ProfileDomainDTOMapper;
-import com.promptoven.profileservice.domain.Following;
-import com.promptoven.profileservice.domain.dto.FollowingModelDTO;
+import com.promptoven.profileservice.application.service.dto.ProfileSearchResultDTO;
+import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
-public class ProfileCommonService
-	//implements ProfileUseCase
-{
-
-	private final ProfileDomainDTOMapper profileDomainDTOMapper;
-	private final FollowingDomainDTOMapper followingDomainDTOMapper;
-
-	public void follow(String profileId, String followerId) {
-		FollowingModelDTO followingModelDTO = FollowingModelDTO.builder()
-			.FollowerID(followerId)
-			.FolloweeID(profileId)
-			.build();
-		Following following = Following.CreateFollowing(followingModelDTO);
-		FollowingDTO followingDTO = followingDomainDTOMapper.toDTO(following);
-		// followingPersistence.save(followingDTO);
-	}
-
-	public void unfollow(String nickname, String followerId) {
-		// Following following = followingPersistence.getFollowingByFollowerAndFollowee(followerId, getMemberUUID(nickname));
-		// followingPersistence.save(followingDomainDTOMapper.toDTO(Following.Unfollow(following)));
-	}
-
-	public void updateProfile(ProfileDTO profileDTO) {
-		// Profile profile = profilePersistence.getProfileByMemberUUID(profileDTO.getMemberUUID());
-		// profilePersistence.SaveProfile(profileDomainDTOMapper.toDTO(Profile.updateProfile(profile, profileDTO)));
-	}
-
-	public ProfileDTO getProfile(String nickname) {
-		// return profilePersistence.getProfileByNickname(nickname);
+public class ProfileCommonService implements ProfileCommonUsecase {
+	
+	@Override
+	public ProfileDTO get(String memberUUID) {
 		return null;
 	}
 
-	public Collection<Object> getFollowers(String nickname) {
-		// return followingPersistence.getFollowersByFollowee(getMemberUUID(nickname));
+	@Override
+	public ProfileDTO getByNickname(String nickname) {
+		return null;
+	}
+
+	@Override
+	public void update(ProfileUpdateRequestDTO profileUpdateRequestDTO) {
+
+	}
+
+	@Override
+	public ProfileShortDTO getShort(String memberUUID) {
+		return null;
+	}
+
+	@Override
+	public ProfileShortDTO getShortByNickname(String nickname) {
+		return null;
+	}
+
+	@Override
+	public List<ProfileSearchResultDTO> search(String query) {
 		return List.of();
-	}
-
-	public Collection<Object> getFollowing(String nickname) {
-		// return followingPersistence.getFollowingByFollower(getMemberUUID(nickname));
-		return List.of();
-	}
-
-	public Object getProfileCount(String nickname) {
-		// return profilePersistence.getProfileCountByNickname(nickname);
-		return null;
-	}
-
-	public ProfileDTO getProfileByMemberUUID(String memberUUID) {
-		// return profilePersistence.getProfileByMemberUUID(memberUUID);
-		return null;
-	}
-
-	private String getMemberUUID(String nickname) {
-		// return profilePersistence.getProfileByNickname(nickname).getMemberUUID();
-		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package com.promptoven.profileservice.adaptor.jpa.entity;
 
+import java.time.LocalDateTime;
+
 import org.springframework.lang.Nullable;
 
 import jakarta.persistence.Entity;
@@ -24,21 +26,18 @@ public class ProfileEntity {
 
 	private String memberUUID;
 	private String nickname;
+	private LocalDateTime createdAt;
 
-	@Nullable
-	private String xId;
-	@Nullable
-	private String instagramId;
-	@Nullable
-	private String youtubeHandle;
-	@Nullable
-	private String webLink;
-	@Nullable
-	private String bio;
 	@Nullable
 	private String banner;
 	@Nullable
 	private String profileImage;
+	@Nullable
+	private String hashtag;
+	@Nullable
+	private String bio;
+	@Nullable
+	private String email;
 
 	public void setId(Long id) {
 		this.Id = id;
