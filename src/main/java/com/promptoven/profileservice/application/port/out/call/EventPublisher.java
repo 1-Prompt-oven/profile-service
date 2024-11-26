@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.application.out.call;
+package com.promptoven.profileservice.application.port.out.call;
 
 public interface EventPublisher {
 

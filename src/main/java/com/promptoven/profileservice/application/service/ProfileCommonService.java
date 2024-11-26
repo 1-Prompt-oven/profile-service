@@ -10,9 +10,7 @@ import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 import com.promptoven.profileservice.application.service.dto.mapper.FollowingDomainDTOMapper;
 import com.promptoven.profileservice.application.service.dto.mapper.ProfileDomainDTOMapper;
 import com.promptoven.profileservice.domain.Following;
-import com.promptoven.profileservice.domain.Profile;
 import com.promptoven.profileservice.domain.dto.FollowingModelDTO;
-import com.promptoven.profileservice.domain.dto.ProfileModelDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,24 +65,9 @@ public class ProfileCommonService
 		return null;
 	}
 
-	public void withdrawProfile(String memberUUID) {
-		// Profile profile = profilePersistence.getProfileByMemberUUID(memberUUID);
-		// profilePersistence.SaveProfile(profileDomainDTOMapper.toDTO(Profile.withdrawProfile(profile)));
-	}
-
-	public void banProfile(String memberUUID) {
-		// Profile profile = profilePersistence.getProfileByMemberUUID(memberUUID);
-		// profilePersistence.SaveProfile(profileDomainDTOMapper.toDTO(Profile.banProfile(profile)));
-	}
-
 	public ProfileDTO getProfileByMemberUUID(String memberUUID) {
 		// return profilePersistence.getProfileByMemberUUID(memberUUID);
 		return null;
-	}
-
-	public void createProfile(ProfileModelDTO profileModelDTO) {
-		Profile profile = Profile.createProfile(profileModelDTO);
-		// profilePersistence.SaveProfile(profileDomainDTOMapper.toDTO(profile));
 	}
 
 	private String getMemberUUID(String nickname) {

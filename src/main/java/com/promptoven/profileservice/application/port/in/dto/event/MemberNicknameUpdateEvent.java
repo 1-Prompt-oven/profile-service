@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.application.in.dto.event;
+package com.promptoven.profileservice.application.port.in.dto.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +7,9 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Getter
-public class MemberRegisterEvent {
+public class MemberNicknameUpdateEvent {
 
 	private final String memberUUID;
-	private final String email;
+	private final String nickname;
+
 }

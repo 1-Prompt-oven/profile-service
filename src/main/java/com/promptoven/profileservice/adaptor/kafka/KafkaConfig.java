@@ -21,14 +21,13 @@ import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.promptoven.profileservice.application.in.dto.event.MemberBanEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberNicknameUpdateEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberRegisterEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberUnbanEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberWithdrawEvent;
-import com.promptoven.profileservice.application.in.dto.event.SettlementFirstCreateEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberBanEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberNicknameUpdateEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberRegisterEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberUnbanEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberWithdrawEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.SettlementFirstCreateEvent;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

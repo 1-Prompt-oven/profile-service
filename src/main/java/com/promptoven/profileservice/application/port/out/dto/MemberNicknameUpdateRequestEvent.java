@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.application.out.dto;
+package com.promptoven.profileservice.application.port.out.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

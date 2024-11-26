@@ -1,4 +1,4 @@
-package com.promptoven.profileservice.application.in.dto.event;
+package com.promptoven.profileservice.application.port.in.dto.event;
 
 import lombok.AllArgsConstructor;
 

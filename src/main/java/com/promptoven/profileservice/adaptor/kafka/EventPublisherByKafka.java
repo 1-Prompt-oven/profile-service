@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.promptoven.profileservice.application.out.call.EventPublisher;
+import com.promptoven.profileservice.application.port.out.call.EventPublisher;
 
 import lombok.RequiredArgsConstructor;
 

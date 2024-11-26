@@ -3,12 +3,12 @@ package com.promptoven.profileservice.adaptor.kafka;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import com.promptoven.profileservice.application.in.dto.event.MemberBanEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberNicknameUpdateEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberRegisterEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberUnbanEvent;
-import com.promptoven.profileservice.application.in.dto.event.MemberWithdrawEvent;
-import com.promptoven.profileservice.application.in.dto.event.SettlementFirstCreateEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberBanEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberNicknameUpdateEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberRegisterEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberUnbanEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.MemberWithdrawEvent;
+import com.promptoven.profileservice.application.port.in.dto.event.SettlementFirstCreateEvent;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
