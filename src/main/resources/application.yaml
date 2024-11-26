@@ -34,6 +34,9 @@ spring:
       auto-index-creation: false
       username: root
       password: 1234
+    redis:
+      host: garnet
+      port: 6379
   jpa:
     hibernate:
       ddl-auto: update
@@ -80,6 +83,9 @@ spring:
     mongodb:
       uri: mongodb://root:1234@localhost:27017/profile_service?directConnection=true&authSource=admin
       auto-index-creation: true
+    redis:
+      host: localhost
+      port: 6379
   jpa:
     hibernate:
       ddl-auto: update
@@ -97,7 +103,7 @@ spring:
       enabled: false
 
 server:
-  port: 0
+  port: 8081
   shutdown: graceful
 
 eureka:
@@ -109,4 +115,8 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+logging:
+  level:
+    com.promptoven.profileservice.adaptor.redis: DEBUG
+
 

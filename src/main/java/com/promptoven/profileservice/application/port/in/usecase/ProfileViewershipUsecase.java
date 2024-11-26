@@ -6,7 +6,9 @@ public interface ProfileViewershipUsecase {
 	// this adding value will cache on redis. and will apply later.
 	void addViewCount(String profileId);
 
+	void addViewCountByNickname(String nickname);
+
 	// The view count of the profile in redis is applied to the profile.
 	// The view count of the profile is reset to 0.
-	void applyViewCounts();
+	void applyViewCounts(String profileId);
 }

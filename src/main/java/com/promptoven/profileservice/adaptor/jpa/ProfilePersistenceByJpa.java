@@ -1,7 +1,9 @@
 package com.promptoven.profileservice.adaptor.jpa;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.promptoven.profileservice.adaptor.jpa.entity.ProfileEntity;
+import com.promptoven.profileservice.adaptor.jpa.repository.ProfileRepository;
 import com.promptoven.profileservice.application.port.out.call.ProfilePersistence;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 
@@ -9,18 +11,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class ProfilePersistenceByJpa implements ProfilePersistence {
 
+	private final ProfileRepository profileRepository;
+
 	@Override
 	public void create(ProfileDTO profileDTO) {
-
+		profileRepository.save(JpaProfileDTOEntityMapper.toEntity(profileDTO));
 	}
 
 	@Override
 	public ProfileDTO read(String profileID) {
-		return null;
+		return JpaProfileDTOEntityMapper.toDTO(profileRepository.findByMemberUUID(profileID));
 	}
 
 	@Override
@@ -30,6 +34,7 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public String getProfileID(String nickname) {
-		return "";
+		ProfileEntity profileEntity = profileRepository.findByNickname(nickname);
+		return profileEntity.getMemberUUID();
 	}
 }
