@@ -10,7 +10,7 @@ public interface ProfileStatisticsRepository extends JpaRepository<ProfileStatis
 
 	@Modifying
 	@Query("UPDATE ProfileStatisticsEntity p SET p.viewer = p.viewer + :count WHERE p.memberUUID = :profileUUID")
-	void addProfileViewCount(String profileUUID, Long count);
+	void addProfileViewCount(String profileUUID, long count);
 	
 	ProfileStatisticsEntity findByMemberUUID(String memberUUID);
 
