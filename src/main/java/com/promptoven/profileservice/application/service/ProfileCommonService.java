@@ -5,15 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.port.in.dto.ProfileUpdateRequestDTO;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
 import com.promptoven.profileservice.application.port.out.call.EventPublisher;
+import com.promptoven.profileservice.application.port.out.call.FollowingPersistence;
 import com.promptoven.profileservice.application.port.out.call.ProfilePersistence;
+import com.promptoven.profileservice.application.port.out.call.ProfileStatisticsPersistence;
 import com.promptoven.profileservice.application.port.out.dto.MemberNicknameUpdateRequestEvent;
 import com.promptoven.profileservice.application.port.out.dto.MemberProfilePictureUpdateEvent;
+import com.promptoven.profileservice.application.service.dto.FollowStatDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
+import com.promptoven.profileservice.application.service.dto.ProfileStatisticsDTO;
 import com.promptoven.profileservice.application.service.dto.mapper.ProfileDomainDTOMapper;
+import com.promptoven.profileservice.application.service.dto.mapper.ProfileResponseDTOMapper;
 import com.promptoven.profileservice.domain.Profile;
 import com.promptoven.profileservice.domain.dto.ProfileModelDTO;
 
@@ -25,9 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ProfileCommonService implements ProfileCommonUsecase {
 
+	private final FollowingPersistence followingPersistence;
 	private final ProfilePersistence profilePersistence;
 	private final ProfileDomainDTOMapper profileDomainDTOMapper;
 	private final EventPublisher eventPublisher;
+	private final ProfileStatisticsPersistence profileStatisticsPersistence;
+	private final ProfileResponseDTOMapper profileResponseDTOMapper;
 
 	@Value("${profile-nickname-update-request-event}")
 	private String nicknameUpdateRequestTopic;
@@ -35,13 +44,25 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 	private String profilePictureUpdateTopic;
 
 	@Override
-	public ProfileDTO get(String memberUUID) {
-		return profilePersistence.read(memberUUID);
+	public ProfileResponseDTO get(String memberUUID) {
+		ProfileDTO profileDTO = profilePersistence.read(memberUUID);
+		ProfileStatisticsDTO profileStatisticsDTO = profileStatisticsPersistence.get(memberUUID);
+		FollowStatDTO followStatDTO = FollowStatDTO.builder()
+			.follower(followingPersistence.countFollowers(memberUUID))
+			.following(followingPersistence.countFollowings(memberUUID))
+			.build();
+		return profileResponseDTOMapper.toDTO(profileDTO, profileStatisticsDTO, followStatDTO);
 	}
 
 	@Override
-	public ProfileDTO getByNickname(String nickname) {
-		return profilePersistence.readByNickname(nickname);
+	public ProfileResponseDTO getByNickname(String nickname) {
+		ProfileDTO profileDTO = profilePersistence.readByNickname(nickname);
+		ProfileStatisticsDTO profileStatisticsDTO = profileStatisticsPersistence.get(profileDTO.getMemberUUID());
+		FollowStatDTO followStatDTO = FollowStatDTO.builder()
+			.follower(followingPersistence.countFollowers(profileDTO.getMemberUUID()))
+			.following(followingPersistence.countFollowings(profileDTO.getMemberUUID()))
+			.build();
+		return profileResponseDTOMapper.toDTO(profileDTO, profileStatisticsDTO, followStatDTO);
 	}
 
 	@Override

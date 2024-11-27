@@ -58,4 +58,5 @@ public class ProfileDomainDTOMapper implements DomainDTOMapper<Profile, ProfileD
 			.profileImage(dto.getProfileImage())
 			.build();
 	}
+
 }

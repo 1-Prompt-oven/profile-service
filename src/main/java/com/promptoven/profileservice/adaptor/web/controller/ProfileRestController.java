@@ -18,9 +18,9 @@ import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileRespon
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileShortResponseVO;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponse;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponseStatus;
+import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.port.in.usecase.FollowingUsecase;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
-import com.promptoven.profileservice.application.service.dto.ProfileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,8 +59,8 @@ public class ProfileRestController {
 
 	@GetMapping("/profile/nickname/{nickname}")
 	public BaseResponse<ProfileResponseVO> getProfileByNickname(@PathVariable String nickname) {
-		ProfileDTO profileDTO = profileUseCase.getByNickname(nickname);
-		ProfileResponseVO profileResponseVO = ProfileResponseMapper.toVO(profileDTO);
+		ProfileResponseDTO profileResponseDTO = profileUseCase.getByNickname(nickname);
+		ProfileResponseVO profileResponseVO = ProfileResponseMapper.toVO(profileResponseDTO);
 
 		if (profileResponseVO == null) {
 			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);
@@ -71,8 +71,8 @@ public class ProfileRestController {
 
 	@GetMapping("/profile/uuid/{memberUUID}")
 	public BaseResponse<ProfileResponseVO> getProfileByUUID(@PathVariable String memberUUID) {
-		ProfileDTO profileDTO = profileUseCase.get(memberUUID);
-		ProfileResponseVO profileResponseVO = ProfileResponseMapper.toVO(profileDTO);
+		ProfileResponseDTO profileResponseDTO = profileUseCase.get(memberUUID);
+		ProfileResponseVO profileResponseVO = ProfileResponseMapper.toVO(profileResponseDTO);
 
 		if (profileResponseVO == null) {
 			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);

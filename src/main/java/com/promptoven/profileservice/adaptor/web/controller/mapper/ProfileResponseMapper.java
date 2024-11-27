@@ -3,24 +3,24 @@ package com.promptoven.profileservice.adaptor.web.controller.mapper;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileSearchResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileShortResponseVO;
-import com.promptoven.profileservice.application.service.dto.ProfileDTO;
+import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
 public class ProfileResponseMapper {
-	public static ProfileResponseVO toVO(ProfileDTO dto) {
+	public static ProfileResponseVO toVO(ProfileResponseDTO profileDTO) {
 		return ProfileResponseVO.builder()
-			.memberUUID(dto.getMemberUUID())
-			.nickname(dto.getNickname())
-			.bio(dto.getBio())
-			.bannerImageUrl(dto.getBanner())
-			.email(dto.getEmail())
-			.avatarImageUrl(dto.getProfileImage())
-			.sales(0L)
-			.follower(0L)
-			.following(0L)
-			.nickname(dto.getHashtag())
-			.joined(dto.getCreatedAt())
-			.viewer(0L)
+			.memberUUID(profileDTO.getMemberUUID())
+			.nickname(profileDTO.getNickname())
+			.bio(profileDTO.getBio())
+			.bannerImageUrl(profileDTO.getBanner())
+			.email(profileDTO.getEmail())
+			.avatarImageUrl(profileDTO.getProfileImage())
+			.sales(profileDTO.getSales())
+			.follower(profileDTO.getFollower())
+			.following(profileDTO.getFollowing())
+			.nickname(profileDTO.getHashtag())
+			.joined(profileDTO.getCreatedAt())
+			.viewer(profileDTO.getViewer())
 			.build();
 	}
 
