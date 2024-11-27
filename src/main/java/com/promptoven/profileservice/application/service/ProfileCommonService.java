@@ -102,7 +102,8 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 
 	@Override
 	public List<ProfileShortDTO> search(String query) {
-		profilePersistence.search(query);
-		return List.of();
+		return profilePersistence.search(query).stream()
+			.map(profileDomainDTOMapper::toShortDTO)
+			.toList();
 	}
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileResponseMapper;
@@ -24,8 +25,8 @@ public class ProfileSearchRestController {
 
 	private final ProfileCommonUsecase profileCommonUsecase;
 
-	@GetMapping("/{query}")
-	public BaseResponse<List<ProfileSearchResponseVO>> searchProfile(String query) {
+	@GetMapping("/search")
+	public BaseResponse<List<ProfileSearchResponseVO>> searchProfile(@RequestParam String query) {
 		log.info("Searching profile by query: {}", query);
 		List<ProfileShortDTO> searchResults = profileCommonUsecase.search(query);
 		log.info("Found {} profiles", searchResults.size());
