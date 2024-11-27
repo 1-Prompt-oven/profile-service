@@ -93,7 +93,7 @@ public class ProfileRestController {
 		return new BaseResponse<>(null);
 	}
 
-	@GetMapping("/profile/uuid/{memberUUID/short}")
+	@GetMapping("/profile/uuid/{memberUUID}/short")
 	public BaseResponse<ProfileShortResponseVO> getShortProfileByUUID(@PathVariable String memberUUID) {
 		ProfileShortResponseVO profileShortResponseVO = ProfileResponseMapper.toShortVO(
 			profileUseCase.getShort(memberUUID));

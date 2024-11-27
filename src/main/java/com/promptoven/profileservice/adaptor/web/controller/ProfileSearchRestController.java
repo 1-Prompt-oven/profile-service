@@ -11,7 +11,7 @@ import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileRespon
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileSearchResponseVO;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponse;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
-import com.promptoven.profileservice.application.service.dto.ProfileSearchResultDTO;
+import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class ProfileSearchRestController {
 	@GetMapping("/{query}")
 	public BaseResponse<List<ProfileSearchResponseVO>> searchProfile(String query) {
 		log.info("Searching profile by query: {}", query);
-		List<ProfileSearchResultDTO> searchResults = profileCommonUsecase.search(query);
+		List<ProfileShortDTO> searchResults = profileCommonUsecase.search(query);
 		log.info("Found {} profiles", searchResults.size());
 		List<ProfileSearchResponseVO> profileSearchResponseVOs = searchResults.stream()
 			.map(ProfileResponseMapper::toSearchVO)

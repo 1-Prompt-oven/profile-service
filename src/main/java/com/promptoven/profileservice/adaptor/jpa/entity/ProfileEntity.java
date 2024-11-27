@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.lang.Nullable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class ProfileEntity {
 	private String profileImage;
 	@Nullable
 	private String hashtag;
-	@Nullable
+	@Column(length = 3000)
 	private String bio;
 	@Nullable
 	private String email;

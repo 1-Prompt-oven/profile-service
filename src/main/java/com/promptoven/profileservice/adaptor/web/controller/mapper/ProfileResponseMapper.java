@@ -4,7 +4,6 @@ import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileRespon
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileSearchResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileShortResponseVO;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
-import com.promptoven.profileservice.application.service.dto.ProfileSearchResultDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
 public class ProfileResponseMapper {
@@ -25,7 +24,7 @@ public class ProfileResponseMapper {
 			.build();
 	}
 
-	public static ProfileSearchResponseVO toSearchVO(ProfileSearchResultDTO dto) {
+	public static ProfileSearchResponseVO toSearchVO(ProfileShortDTO dto) {
 		return ProfileSearchResponseVO.builder()
 			.id(dto.getMemberUUID())
 			.nickname(dto.getNickname())
