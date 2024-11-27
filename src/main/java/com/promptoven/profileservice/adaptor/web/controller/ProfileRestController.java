@@ -15,6 +15,7 @@ import com.promptoven.profileservice.adaptor.web.controller.vo.in.FollowRequestV
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.ProfileUpdateRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.UnfollowRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileResponseVO;
+import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileShortResponseVO;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponse;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponseStatus;
 import com.promptoven.profileservice.application.port.in.usecase.FollowingUsecase;
@@ -90,5 +91,29 @@ public class ProfileRestController {
 	public BaseResponse<ProfileResponseVO> getFollowerByNickname(@PathVariable String nickname) {
 		followingUsecase.getFollowers(nickname);
 		return new BaseResponse<>(null);
+	}
+
+	@GetMapping("/profile/uuid/{memberUUID/short}")
+	public BaseResponse<ProfileShortResponseVO> getShortProfileByUUID(@PathVariable String memberUUID) {
+		ProfileShortResponseVO profileShortResponseVO = ProfileResponseMapper.toShortVO(
+			profileUseCase.getShort(memberUUID));
+
+		if (null == profileShortResponseVO) {
+			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);
+		}
+
+		return new BaseResponse<>(profileShortResponseVO);
+	}
+
+	@GetMapping("/profile/nickname/{nickname}/short")
+	public BaseResponse<ProfileShortResponseVO> getShortProfileByNickname(@PathVariable String nickname) {
+		ProfileShortResponseVO profileShortResponseVO = ProfileResponseMapper.toShortVO(
+			profileUseCase.getShortByNickname(nickname));
+
+		if (null == profileShortResponseVO) {
+			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);
+		}
+
+		return new BaseResponse<>(profileShortResponseVO);
 	}
 }

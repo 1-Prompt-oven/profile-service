@@ -28,4 +28,8 @@ public class ProfileDTO {
 	@Nullable
 	private final String email;
 
+	private boolean isWithdrew;
+	private boolean isBanned;
+	private boolean isCreator;
+
 }

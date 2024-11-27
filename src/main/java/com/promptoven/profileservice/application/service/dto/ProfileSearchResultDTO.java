@@ -12,8 +12,5 @@ public class ProfileSearchResultDTO {
 	private final String memberUUID;
 	private final String profileImage;
 	private final String nickname;
-	private final Long rank;
-	private final float rating;
-	private final Long followers;
 
 }

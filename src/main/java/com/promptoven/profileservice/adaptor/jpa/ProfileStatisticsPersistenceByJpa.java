@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.promptoven.profileservice.adaptor.jpa.repository.ProfileStatisticsRepository;
 import com.promptoven.profileservice.application.port.out.call.ProfileStatisticsPersistence;
+import com.promptoven.profileservice.application.service.dto.ProfileStatisticsDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,5 +21,12 @@ public class ProfileStatisticsPersistenceByJpa implements ProfileStatisticsPersi
 	@Transactional
 	public void addProfileViewCount(String profileUUID, Long count) {
 		profileStatisticsRepository.addProfileViewCount(profileUUID, count);
+	}
+
+	@Override
+	@Transactional
+	public void create(ProfileStatisticsDTO profileStatisticsDTO) {
+
+		profileStatisticsRepository.save();
 	}
 }

@@ -7,12 +7,8 @@ import lombok.Builder;
 @Builder
 public class ProfileSearchResponseVO {
 
-	private final String backgroundImg;
 	private final String thumbnail;
 	private final String nickname;
-	private final Long rank;
-	private final Double rating;
-	private final Long follower;
 	private final String id;
 
 }

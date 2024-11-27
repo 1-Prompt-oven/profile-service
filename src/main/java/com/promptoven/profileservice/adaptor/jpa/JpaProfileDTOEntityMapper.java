@@ -15,6 +15,9 @@ class JpaProfileDTOEntityMapper {
 			.email(dto.getEmail())
 			.nickname(dto.getNickname())
 			.createdAt(dto.getCreatedAt())
+			.isWithdrew(dto.isWithdrew())
+			.isBanned(dto.isBanned())
+			.isCreator(dto.isCreator())
 			.build();
 	}
 
@@ -28,6 +31,9 @@ class JpaProfileDTOEntityMapper {
 			.email(entity.getEmail())
 			.nickname(entity.getNickname())
 			.createdAt(entity.getCreatedAt())
+			.isBanned(entity.isBanned())
+			.isCreator(entity.isCreator())
+			.isWithdrew(entity.isWithdrew())
 			.build();
 	}
 
