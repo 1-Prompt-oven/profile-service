@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Builder
-public class MemberNicknameUpdateRequestEvent {
+public class MemberProfilePictureUpdateEvent {
 	private String memberUUID;
-	private String nickname;
+	private String picture;
 }

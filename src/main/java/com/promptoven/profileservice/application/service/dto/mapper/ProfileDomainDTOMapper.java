@@ -2,8 +2,11 @@ package com.promptoven.profileservice.application.service.dto.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.promptoven.profileservice.application.port.in.dto.ProfileUpdateRequestDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
+import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 import com.promptoven.profileservice.domain.Profile;
+import com.promptoven.profileservice.domain.dto.ProfileModelDTO;
 
 @Component
 public class ProfileDomainDTOMapper implements DomainDTOMapper<Profile, ProfileDTO> {
@@ -33,6 +36,26 @@ public class ProfileDomainDTOMapper implements DomainDTOMapper<Profile, ProfileD
 			.bio(dto.getBio())
 			.hashtag(dto.getHashtag())
 			.email(dto.getEmail())
+			.build();
+	}
+
+	public ProfileModelDTO toUpdateModelDTO(ProfileUpdateRequestDTO dto) {
+		return ProfileModelDTO.builder()
+			.memberUUID(dto.getMemberUUID())
+			.banner(dto.getBanner())
+			.profileImage(dto.getProfileImage())
+			.hashtag(dto.getHashtag())
+			.bio(dto.getBio())
+			.email(dto.getEmail())
+			.nickname(dto.getNickname())
+			.build();
+	}
+
+	public ProfileShortDTO toShortDTO(ProfileDTO dto) {
+		return ProfileShortDTO.builder()
+			.memberUUID(dto.getMemberUUID())
+			.nickname(dto.getNickname())
+			.profileImage(dto.getProfileImage())
 			.build();
 	}
 }

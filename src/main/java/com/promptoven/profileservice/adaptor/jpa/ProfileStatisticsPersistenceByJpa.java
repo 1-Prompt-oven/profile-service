@@ -24,9 +24,12 @@ public class ProfileStatisticsPersistenceByJpa implements ProfileStatisticsPersi
 	}
 
 	@Override
-	@Transactional
 	public void create(ProfileStatisticsDTO profileStatisticsDTO) {
+		profileStatisticsRepository.save(JpaProfileStatisticsDTOEntityMapper.toEntity(profileStatisticsDTO));
+	}
 
-		profileStatisticsRepository.save();
+	@Override
+	public ProfileStatisticsDTO get(String memberUUID) {
+		return JpaProfileStatisticsDTOEntityMapper.toDTO(profileStatisticsRepository.findByMemberUUID(memberUUID));
 	}
 }

@@ -21,6 +21,7 @@ public class ProfileStatisticsEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 
+	@Column(unique = true)
 	private String memberUUID;
 
 	private Long viewer;
@@ -31,5 +32,9 @@ public class ProfileStatisticsEntity {
 	private Long rank;
 
 	private Double rating;
+
+	public void setId(Long id) {
+		this.Id = id;
+	}
 
 }

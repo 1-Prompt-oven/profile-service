@@ -8,4 +8,6 @@ public interface ProfileStatisticsPersistence {
 
 	void create(ProfileStatisticsDTO profileStatisticsDTO);
 
+	ProfileStatisticsDTO get(String profileUUID);
+
 }

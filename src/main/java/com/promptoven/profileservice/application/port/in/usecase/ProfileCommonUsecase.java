@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.promptoven.profileservice.application.port.in.dto.ProfileUpdateRequestDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileDTO;
-import com.promptoven.profileservice.application.service.dto.ProfileSearchResultDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
 public interface ProfileCommonUsecase {
@@ -19,5 +18,5 @@ public interface ProfileCommonUsecase {
 
 	ProfileShortDTO getShortByNickname(String nickname);
 
-	List<ProfileSearchResultDTO> search(String query);
+	List<ProfileShortDTO> search(String query);
 }

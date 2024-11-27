@@ -19,4 +19,6 @@ public interface FollowingPersistence {
 	List<String> getFollowers(String followedUuid);
 
 	List<String> getFollowings(String followerUuid);
+
+	FollowingDTO getFollowingObject(String follower, String followee);
 }

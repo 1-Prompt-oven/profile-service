@@ -97,7 +97,7 @@ public class Profile {
 	public static Profile updateProfile(Profile profile, ProfileModelDTO profileModelDTO) {
 		return Profile.builder()
 			.memberUUID(profile.getMemberUUID())
-			.nickname(profileModelDTO.getNickname())
+			.nickname(profile.getNickname())
 			.createdAt(profile.getCreatedAt())
 
 			.banner(null != profileModelDTO.getBanner() ? profileModelDTO.getBanner() : profile.getBanner())
