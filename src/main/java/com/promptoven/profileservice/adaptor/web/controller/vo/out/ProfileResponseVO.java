@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 @AllArgsConstructor
 @Builder
+@Getter
 public class ProfileResponseVO {
 	private final String memberUUID;
 	private final String bannerImageUrl;

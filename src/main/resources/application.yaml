@@ -118,5 +118,3 @@ eureka:
 logging:
   level:
     com.promptoven.profileservice.adaptor.redis: DEBUG
-
-

@@ -37,7 +37,7 @@ public class ProfileViewershipService implements ProfileViewershipUsecase {
 	@Override
 	public void applyViewCounts(String profileId) {
 		Long accumulatedCount = profileViewershipMemory.getAndResetViewCount(profileId);
-		if (accumulatedCount > 0) {
+		if (null != accumulatedCount && accumulatedCount > 0) {
 			profileStatisticsPersistence.addProfileViewCount(profileId, accumulatedCount);
 		}
 	}

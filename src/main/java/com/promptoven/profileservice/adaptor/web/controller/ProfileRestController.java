@@ -1,5 +1,7 @@
 package com.promptoven.profileservice.adaptor.web.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,15 +84,17 @@ public class ProfileRestController {
 	}
 
 	@GetMapping("/profile/nickname/{nickname}/following")
-	public BaseResponse<ProfileResponseVO> getFollowingByNickname(@PathVariable String nickname) {
-		followingUsecase.getFollowing(nickname);
-		return new BaseResponse<>(null);
+	public BaseResponse<List<ProfileShortResponseVO>> getFollowingByNickname(@PathVariable String nickname) {
+		return new BaseResponse<>(followingUsecase.getFollowing(nickname).stream()
+			.map(ProfileResponseMapper::toShortVO)
+			.toList());
 	}
 
 	@GetMapping("/profile/nickname/{nickname}/follower")
-	public BaseResponse<ProfileResponseVO> getFollowerByNickname(@PathVariable String nickname) {
-		followingUsecase.getFollowers(nickname);
-		return new BaseResponse<>(null);
+	public BaseResponse<List<ProfileShortResponseVO>> getFollowerByNickname(@PathVariable String nickname) {
+		return new BaseResponse<>(followingUsecase.getFollowers(nickname).stream()
+			.map(ProfileResponseMapper::toShortVO)
+			.toList());
 	}
 
 	@GetMapping("/profile/uuid/{memberUUID}/short")
