@@ -64,11 +64,11 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 			.stream()
 			.map(JpaProfileDTOEntityMapper::toDTO)
 			.collect(Collectors.toList());
-		List<ProfileDTO> bioSearchResult = profileRepository.findByBioContaining(query)
-			.stream()
-			.map(JpaProfileDTOEntityMapper::toDTO)
-			.collect(Collectors.toList());
-		return Stream.of(nicknameSearchResult, hashtagSearchResult, bioSearchResult)
+		// List<ProfileDTO> bioSearchResult = profileRepository.findByBioContaining(query)
+		// 	.stream()
+		// 	.map(JpaProfileDTOEntityMapper::toDTO)
+		// 	.collect(Collectors.toList());
+		return Stream.of(nicknameSearchResult, hashtagSearchResult)
 			.flatMap(List::stream)
 			.distinct()
 			.collect(Collectors.toList());
