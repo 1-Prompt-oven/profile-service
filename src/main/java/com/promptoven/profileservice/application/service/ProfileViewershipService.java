@@ -42,6 +42,7 @@ public class ProfileViewershipService implements ProfileViewershipUsecase {
 		}
 	}
 
+	@Override
 	@Scheduled(fixedRate = 60000 * 60) // Runs every 1 hour
 	public void applyAllProfileViewCounts() {
 		log.info("Starting scheduled profile view count application");

@@ -51,7 +51,7 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public List<String> getAllProfileIDs() {
-		return profileRepository.findAll().stream().map(ProfileEntity::getMemberUUID).collect(Collectors.toList());
+		return profileRepository.findAllProfileIDs();
 	}
 
 	@Override

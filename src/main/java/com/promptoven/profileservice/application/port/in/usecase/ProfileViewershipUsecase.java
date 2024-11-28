@@ -11,4 +11,7 @@ public interface ProfileViewershipUsecase {
 	// The view count of the profile in redis is applied to the profile.
 	// The view count of the profile is reset to 0.
 	void applyViewCounts(String profileId);
+
+	// test method for applyViewCounts
+	void applyAllProfileViewCounts();
 }

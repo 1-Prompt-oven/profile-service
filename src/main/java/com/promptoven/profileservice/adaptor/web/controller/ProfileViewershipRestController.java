@@ -36,4 +36,10 @@ public class ProfileViewershipRestController {
 		profileViewershipUsecase.applyViewCounts(profileId);
 		return new BaseResponse<>();
 	}
+
+	@PostMapping("/test/all")
+	public BaseResponse<Void> testV() {
+		profileViewershipUsecase.applyAllProfileViewCounts();
+		return new BaseResponse<>();
+	}
 }
