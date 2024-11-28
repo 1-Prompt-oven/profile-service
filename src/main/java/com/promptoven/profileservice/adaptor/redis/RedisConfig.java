@@ -30,7 +30,7 @@ public class RedisConfig {
 		RedisStandaloneConfiguration serverConfig = new RedisStandaloneConfiguration();
 		serverConfig.setHostName(host);
 		serverConfig.setPort(port);
-		serverConfig.setDatabase(1);
+		serverConfig.setDatabase(0);
 
 		LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
 			.clientOptions(ClientOptions.builder()
