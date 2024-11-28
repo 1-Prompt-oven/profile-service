@@ -3,12 +3,14 @@ package com.promptoven.profileservice.application.port.in.dto.event;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class MemberRegisterEvent {
 
-	private final String memberUUID;
-	private final String nickname;
+	private String memberUUID;
+	private String nickname;
 }
