@@ -46,15 +46,6 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/profile-service .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/profile-service
 
-      - name: docker-compose yaml update
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_KEY }}
-          source: docker-compose.yaml
-          target: /home/ubuntu/profile-service
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
