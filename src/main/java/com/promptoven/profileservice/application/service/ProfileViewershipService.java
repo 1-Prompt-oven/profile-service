@@ -1,5 +1,7 @@
 package com.promptoven.profileservice.application.service;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +49,8 @@ public class ProfileViewershipService implements ProfileViewershipUsecase {
 	public void applyAllProfileViewCounts() {
 		log.info("Starting scheduled profile view count application");
 		try {
-			profilePersistence.getAllProfileIDs().forEach(this::applyViewCounts);
+			profilePersistence.getAllProfileIDs()
+				.forEach(profileId -> CompletableFuture.runAsync(() -> applyViewCounts(profileId)));
 			log.info("Completed scheduled profile view count application");
 		} catch (Exception e) {
 			log.error("Error during scheduled profile view count application", e);
