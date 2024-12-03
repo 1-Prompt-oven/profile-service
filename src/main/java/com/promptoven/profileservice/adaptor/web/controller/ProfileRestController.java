@@ -122,10 +122,10 @@ public class ProfileRestController {
 		return new BaseResponse<>(profileShortResponseVO);
 	}
 
-	@GetMapping("/profile/pricture/{uuid}")
-	public BaseResponse<ProfilePictureResponseVO> getProfileImage(@PathVariable String uuid) {
+	@GetMapping("/profile/pricture/{memberUUID}")
+	public BaseResponse<ProfilePictureResponseVO> getProfileImage(@PathVariable String memberUUID) {
 		ProfilePictureResponseVO profilePictureResponseVO = ProfileResponseMapper.toPictureVO(
-			profileUseCase.getPicture(uuid));
+			profileUseCase.getPicture(memberUUID));
 		if (null == profilePictureResponseVO) {
 			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);
 		}
