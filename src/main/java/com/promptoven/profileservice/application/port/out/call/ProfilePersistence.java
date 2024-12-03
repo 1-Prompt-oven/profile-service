@@ -19,4 +19,6 @@ public interface ProfilePersistence {
 	ProfileDTO readByNickname(String nickname);
 
 	List<ProfileDTO> search(String query);
+
+	String getPicture(String memberUUID);
 }

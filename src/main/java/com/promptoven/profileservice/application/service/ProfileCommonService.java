@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.promptoven.profileservice.application.port.in.dto.ProfilePictureResponseDTO;
 import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.port.in.dto.ProfileUpdateRequestDTO;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
@@ -105,5 +106,13 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 		return profilePersistence.search(query).stream()
 			.map(profileDomainDTOMapper::toShortDTO)
 			.toList();
+	}
+
+	@Override
+	public ProfilePictureResponseDTO getPicture(String memberUUID) {
+		return ProfilePictureResponseDTO.builder()
+			.memberUUID(memberUUID)
+			.Picture(profilePersistence.getPicture(memberUUID))
+			.build();
 	}
 }

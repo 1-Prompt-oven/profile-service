@@ -1,8 +1,10 @@
 package com.promptoven.profileservice.adaptor.web.controller.mapper;
 
+import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfilePictureResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileSearchResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileShortResponseVO;
+import com.promptoven.profileservice.application.port.in.dto.ProfilePictureResponseDTO;
 import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
 
@@ -37,6 +39,13 @@ public class ProfileResponseMapper {
 			.memberUuid(dto.getMemberUUID())
 			.memberNickname(dto.getNickname())
 			.memberProfileImage(dto.getProfileImage())
+			.build();
+	}
+
+	public static ProfilePictureResponseVO toPictureVO(ProfilePictureResponseDTO dto) {
+		return ProfilePictureResponseVO.builder()
+			.memberUUID(dto.getMemberUUID())
+			.Picture(dto.getPicture())
 			.build();
 	}
 }

@@ -16,6 +16,7 @@ import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileUpdate
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.FollowRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.ProfileUpdateRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.UnfollowRequestVO;
+import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfilePictureResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileResponseVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileShortResponseVO;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponse;
@@ -119,5 +120,15 @@ public class ProfileRestController {
 		}
 
 		return new BaseResponse<>(profileShortResponseVO);
+	}
+
+	@GetMapping("/profile/pricture/{uuid}")
+	public BaseResponse<ProfilePictureResponseVO> getProfileImage(@PathVariable String memberUUID) {
+		ProfilePictureResponseVO profilePictureResponseVO = ProfileResponseMapper.toPictureVO(
+			profileUseCase.getPicture(memberUUID));
+		if (null == profilePictureResponseVO) {
+			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);
+		}
+		return new BaseResponse<>(profilePictureResponseVO);
 	}
 }

@@ -2,6 +2,7 @@ package com.promptoven.profileservice.application.port.in.usecase;
 
 import java.util.List;
 
+import com.promptoven.profileservice.application.port.in.dto.ProfilePictureResponseDTO;
 import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.port.in.dto.ProfileUpdateRequestDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileShortDTO;
@@ -19,4 +20,6 @@ public interface ProfileCommonUsecase {
 	ProfileShortDTO getShortByNickname(String nickname);
 
 	List<ProfileShortDTO> search(String query);
+
+	ProfilePictureResponseDTO getPicture(String memberUUID);
 }

@@ -21,4 +21,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
 	@Query("SELECT p.memberUUID FROM ProfileEntity p")
 	List<String> findAllProfileIDs();
+
+	@Query("select p.profileImage From ProfileEntity p where p.memberUUID = :memberUUID")
+	String findPictureByID(String memberUUID);
 }
