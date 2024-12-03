@@ -120,7 +120,7 @@ spring:
       enabled: false
 
 server:
-  port: 8081
+  port: 8080
   shutdown: graceful
 
 eureka:
