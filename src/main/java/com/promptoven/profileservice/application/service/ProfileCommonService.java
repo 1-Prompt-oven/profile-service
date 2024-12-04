@@ -1,7 +1,7 @@
 package com.promptoven.profileservice.application.service;
 
 import java.util.List;
-
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +47,9 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 	@Override
 	public ProfileResponseDTO get(String memberUUID) {
 		ProfileDTO profileDTO = profilePersistence.read(memberUUID);
+		if (null == profileDTO) {
+			return null;
+		}
 		ProfileStatisticsDTO profileStatisticsDTO = profileStatisticsPersistence.get(memberUUID);
 		FollowStatDTO followStatDTO = FollowStatDTO.builder()
 			.follower(followingPersistence.countFollowers(memberUUID))
@@ -58,6 +61,9 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 	@Override
 	public ProfileResponseDTO getByNickname(String nickname) {
 		ProfileDTO profileDTO = profilePersistence.readByNickname(nickname);
+		if (null == profileDTO) {
+			return null;
+		}
 		ProfileStatisticsDTO profileStatisticsDTO = profileStatisticsPersistence.get(profileDTO.getMemberUUID());
 		FollowStatDTO followStatDTO = FollowStatDTO.builder()
 			.follower(followingPersistence.countFollowers(profileDTO.getMemberUUID()))
@@ -92,27 +98,38 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 	@Override
 	public ProfileShortDTO getShort(String memberUUID) {
 		ProfileDTO profileDTO = profilePersistence.read(memberUUID);
+		if (null == profileDTO) {
+			return null;
+		}
 		return profileDomainDTOMapper.toShortDTO(profileDTO);
 	}
 
 	@Override
 	public ProfileShortDTO getShortByNickname(String nickname) {
 		ProfileDTO profileDTO = profilePersistence.readByNickname(nickname);
+		if (null == profileDTO) {
+			return null;
+		}
 		return profileDomainDTOMapper.toShortDTO(profileDTO);
 	}
 
 	@Override
 	public List<ProfileShortDTO> search(String query) {
 		return profilePersistence.search(query).stream()
+			.filter(Objects::nonNull)
 			.map(profileDomainDTOMapper::toShortDTO)
 			.toList();
 	}
 
 	@Override
 	public ProfilePictureResponseDTO getPicture(String memberUUID) {
+		String picture = profilePersistence.getPicture(memberUUID);
+		if (null == picture) {
+			return null;
+		}
 		return ProfilePictureResponseDTO.builder()
 			.memberUUID(memberUUID)
-			.Picture(profilePersistence.getPicture(memberUUID))
+			.Picture(picture)
 			.build();
 	}
 }

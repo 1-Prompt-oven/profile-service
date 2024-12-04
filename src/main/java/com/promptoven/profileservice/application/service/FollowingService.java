@@ -1,6 +1,7 @@
 package com.promptoven.profileservice.application.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -59,8 +60,9 @@ public class FollowingService implements FollowingUsecase {
 	public List<ProfileShortDTO> getFollowers(String followee) {
 		List<String> followers = followingPersistence.getFollowers(followee);
 		return followers.stream()
-			.map(profilePersistence::readByNickname).
-			toList().stream()
+			.map(profilePersistence::read)
+			.filter(Objects::nonNull)
+			.toList().stream()
 			.map(profileDomainDTOMapper::toShortDTO)
 			.toList();
 	}
@@ -69,7 +71,8 @@ public class FollowingService implements FollowingUsecase {
 	public List<ProfileShortDTO> getFollowing(String follower) {
 		List<String> followings = followingPersistence.getFollowings(follower);
 		return followings.stream()
-			.map(profilePersistence::readByNickname)
+			.map(profilePersistence::read)
+			.filter(Objects::nonNull)
 			.toList().stream()
 			.map(profileDomainDTOMapper::toShortDTO)
 			.toList();

@@ -28,12 +28,20 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public ProfileDTO read(String profileID) {
-		return JpaProfileDTOEntityMapper.toDTO(profileRepository.findByMemberUUID(profileID));
+		ProfileEntity profileEntity = profileRepository.findByMemberUUID(profileID);
+		if (profileEntity.isWithdrew()) {
+			return null;
+		}
+		return JpaProfileDTOEntityMapper.toDTO(profileEntity);
 	}
 
 	@Override
 	public ProfileDTO readByNickname(String nickname) {
-		return JpaProfileDTOEntityMapper.toDTO(profileRepository.findByNickname(nickname));
+		ProfileEntity profileEntity = profileRepository.findByNickname(nickname);
+		if (profileEntity.isWithdrew()) {
+			return null;
+		}
+		return JpaProfileDTOEntityMapper.toDTO(profileEntity);
 	}
 
 	@Override
@@ -45,8 +53,11 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public String getProfileID(String nickname) {
-		ProfileEntity profileEntity = profileRepository.findByNickname(nickname);
-		return profileEntity.getMemberUUID();
+		String profileID = profileRepository.findIDByNickname(nickname);
+		if (null == profileID) {
+			return null;
+		}
+		return profileID;
 	}
 
 	@Override
@@ -58,17 +69,20 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 	public List<ProfileDTO> search(String query) {
 		List<ProfileDTO> nicknameSearchResult = profileRepository.findByNicknameContaining(query)
 			.stream()
+			.filter(profileEntity -> !profileEntity.isBanned() && !profileEntity.isWithdrew())
 			.map(JpaProfileDTOEntityMapper::toDTO)
 			.collect(Collectors.toList());
 		List<ProfileDTO> hashtagSearchResult = profileRepository.findByHashtagContaining(query)
 			.stream()
+			.filter(profileEntity -> !profileEntity.isBanned() && !profileEntity.isWithdrew())
 			.map(JpaProfileDTOEntityMapper::toDTO)
 			.collect(Collectors.toList());
-		// List<ProfileDTO> bioSearchResult = profileRepository.findByBioContaining(query)
-		// 	.stream()
-		// 	.map(JpaProfileDTOEntityMapper::toDTO)
-		// 	.collect(Collectors.toList());
-		return Stream.of(nicknameSearchResult, hashtagSearchResult)
+		List<ProfileDTO> bioSearchResult = profileRepository.findByBioContaining(query)
+			.stream()
+			.filter(profileEntity -> !profileEntity.isBanned() && !profileEntity.isWithdrew())
+			.map(JpaProfileDTOEntityMapper::toDTO)
+			.collect(Collectors.toList());
+		return Stream.of(nicknameSearchResult, hashtagSearchResult, bioSearchResult)
 			.flatMap(List::stream)
 			.distinct()
 			.collect(Collectors.toList());
@@ -77,7 +91,11 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public String getPicture(String memberUUID) {
-		return profileRepository.findPictureByID(memberUUID);
+		String picture = profileRepository.findPictureByID(memberUUID);
+		if (null == picture) {
+			return null;
+		}
+		return picture;
 	}
 
 }

@@ -9,10 +9,8 @@ import com.promptoven.profileservice.adaptor.jpa.entity.ProfileEntity;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
-	@Query("select p from ProfileEntity  p where p.memberUUID = :memberUUID and p.isWithdrew=false and p.isBanned = false")
 	ProfileEntity findByMemberUUID(String memberUUID);
 
-	@Query("select p from ProfileEntity p where p.nickname = :nickname and p.isBanned=false and p.isWithdrew=false")
 	ProfileEntity findByNickname(String nickname);
 
 	List<ProfileEntity> findByNicknameContaining(String nickname);
@@ -21,9 +19,12 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
 	List<ProfileEntity> findByHashtagContaining(String hashtag);
 
-	@Query("SELECT p.memberUUID FROM ProfileEntity p")
+	@Query("SELECT p.memberUUID FROM ProfileEntity p where p.isWithdrew=false and p.isBanned = false")
 	List<String> findAllProfileIDs();
 
-	@Query("select p.profileImage From ProfileEntity p where p.memberUUID = :memberUUID")
+	@Query("select p.profileImage From ProfileEntity p where p.memberUUID = :memberUUID and p.isWithdrew=false and p.isBanned = false")
 	String findPictureByID(String memberUUID);
+
+	@Query("select p.memberUUID From ProfileEntity p where p.nickname = :nickname and p.isWithdrew=false and p.isBanned = false")
+	String findIDByNickname(String nickname);
 }
