@@ -13,7 +13,7 @@ public class ProfileResponseVO {
 	private final String memberUUID;
 	private final String bannerImageUrl;
 	private final String avatarImageUrl;
-	private final String hashtag;
+	private final String hashTag;
 	private final String bio;
 	private final String email;
 	private final String nickname;

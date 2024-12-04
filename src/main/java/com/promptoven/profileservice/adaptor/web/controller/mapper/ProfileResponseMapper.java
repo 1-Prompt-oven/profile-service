@@ -20,7 +20,7 @@ public class ProfileResponseMapper {
 			.sales(profileDTO.getSales())
 			.follower(profileDTO.getFollower())
 			.following(profileDTO.getFollowing())
-			.hashtag(profileDTO.getHashtag())
+			.hashTag(profileDTO.getHashtag())
 			.joined(profileDTO.getCreatedAt())
 			.viewer(profileDTO.getViewer())
 			.build();

@@ -10,7 +10,7 @@ public class ProfileUpdateRequestMapper {
 			.memberUUID(vo.getMemberUUID())
 			.banner(vo.getBannerImageUrl())
 			.profileImage(vo.getAvatarImageUrl())
-			.hashtag(vo.getHashtag())
+			.hashtag(vo.getHashTag())
 			.bio(vo.getBio())
 			.email(vo.getEmail())
 			.nickname(vo.getNickname())

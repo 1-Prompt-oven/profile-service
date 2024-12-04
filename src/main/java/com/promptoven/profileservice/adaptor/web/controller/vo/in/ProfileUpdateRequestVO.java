@@ -15,7 +15,7 @@ public class ProfileUpdateRequestVO {
 	private String avatarImageUrl;
 
 	@Nullable
-	private String hashtag;
+	private String hashTag;
 	@Nullable
 	private String bio;
 	@Nullable
