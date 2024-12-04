@@ -34,15 +34,17 @@ public class ProfileAggregateTraceService {
 		}
 	}
 
-	@Scheduled(cron = "0 0 1 * * *") // Runs at 01:00 UTC daily
+	@Scheduled(cron = "0 0 2 * * *") // Runs at 02:00 UTC daily
 	public void applyAllProfileViewCounts() {
-		log.info("Starting scheduled profile view count application");
 		try {
-			profilePersistence.getAllProfileIDs()
-				.forEach(profileId -> CompletableFuture.runAsync(() -> applySellingCounts(profileId)));
-			log.info("Completed scheduled profile view count application");
+			if (sellerBatchInfoRequest.checkHealth()) {
+				profilePersistence.getAllProfileIDs()
+					.forEach(profileId -> CompletableFuture.runAsync(() -> applySellingCounts(profileId)));
+			} else {
+				log.error("Seller batch service is not healthy");
+			}
 		} catch (Exception e) {
-			log.error("Error during scheduled profile view count application", e);
+			log.error("Error during scheduled profile seller stat update application", e);
 		}
 	}
 }

@@ -42,4 +42,19 @@ public class SellerBatchInfoRequestByWebclient implements SellerBatchInfoRequest
 			})
 			.block(); // Convert reactive to blocking
 	}
+
+	@Override
+	public boolean checkHealth() {
+		try {
+			return webClient.get()
+				.uri("/v1/seller-batch/aggregate/health-check-test")
+				.retrieve()
+				.toBodilessEntity()
+				.map(response -> response.getStatusCode().is2xxSuccessful())
+				.onErrorReturn(false)
+				.block();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
