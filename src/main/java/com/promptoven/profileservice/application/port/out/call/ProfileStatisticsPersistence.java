@@ -1,5 +1,6 @@
 package com.promptoven.profileservice.application.port.out.call;
 
+import com.promptoven.profileservice.application.port.out.dto.SellerStatisticDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileStatisticsDTO;
 
 public interface ProfileStatisticsPersistence {
@@ -9,5 +10,7 @@ public interface ProfileStatisticsPersistence {
 	void create(ProfileStatisticsDTO profileStatisticsDTO);
 
 	ProfileStatisticsDTO get(String profileUUID);
+
+	void updateSellerStatistics(SellerStatisticDTO sellerStatisticDTO);
 
 }
