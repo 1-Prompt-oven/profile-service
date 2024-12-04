@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import com.promptoven.profileservice.application.port.in.dto.FollowRequestDTO;
+import com.promptoven.profileservice.application.port.in.dto.IsFollowingRequestDTO;
 import com.promptoven.profileservice.application.port.in.dto.UnfollowRequestDTO;
 import com.promptoven.profileservice.application.port.in.usecase.FollowingUsecase;
 import com.promptoven.profileservice.application.port.out.call.FollowingPersistence;
@@ -52,8 +53,10 @@ public class FollowingService implements FollowingUsecase {
 	}
 
 	@Override
-	public boolean isFollowing(String follower, String followee) {
-		return followingPersistence.isFollowing(follower, followee);
+	public boolean isFollowing(IsFollowingRequestDTO isFollowingRequestDTO) {
+		String followerNickname = profilePersistence.getProfileID(isFollowingRequestDTO.getFollower());
+		String followeeNickname = profilePersistence.getProfileID(isFollowingRequestDTO.getFollowee());
+		return followingPersistence.isFollowing(followerNickname, followeeNickname);
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import com.promptoven.profileservice.adaptor.web.controller.mapper.FollowingRequ
 import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileResponseMapper;
 import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileUpdateRequestMapper;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.FollowRequestVO;
+import com.promptoven.profileservice.adaptor.web.controller.vo.in.IsFollowingRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.ProfileUpdateRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.in.UnfollowRequestVO;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfilePictureResponseVO;
@@ -96,6 +97,16 @@ public class ProfileRestController {
 		return new BaseResponse<>(followingUsecase.getFollowers(nickname).stream()
 			.map(ProfileResponseMapper::toShortVO)
 			.toList());
+	}
+
+	@GetMapping("/profile/relation/{follower}/{followee}")
+	public BaseResponse<Boolean> isFollowing(@PathVariable String follower, @PathVariable String followee) {
+		IsFollowingRequestVO isFollowingRequestVO = IsFollowingRequestVO.builder()
+			.followee(followee)
+			.follower(follower)
+			.build();
+		return new BaseResponse<>(
+			followingUsecase.isFollowing(FollowingRequestMapper.toIsFollowingRequestDTO(isFollowingRequestVO)));
 	}
 
 	@GetMapping("/profile/uuid/{memberUUID}/short")
