@@ -11,6 +11,6 @@ public interface ProfileStatisticsPersistence {
 
 	ProfileStatisticsDTO get(String profileUUID);
 
-	void updateSellerStatues(SellerStatisticDTO sellerStatisticDTO);
+	void updateSellerStatistics(SellerStatisticDTO sellerStatisticDTO);
 
 }

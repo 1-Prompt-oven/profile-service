@@ -30,7 +30,7 @@ public class ProfileAggregateTraceService {
 				.rank(extractedSellerStatisticDTO.getRank())
 				.sales(extractedSellerStatisticDTO.getSales())
 				.build();
-			profileStatisticsPersistence.updateSellerStatues(sellerStatisticDTO);
+			profileStatisticsPersistence.updateSellerStatistics(sellerStatisticDTO);
 		}
 	}
 

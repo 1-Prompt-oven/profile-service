@@ -36,7 +36,7 @@ public class ProfileStatisticsPersistenceByJpa implements ProfileStatisticsPersi
 	}
 
 	@Override
-	public void updateSellerStatues(SellerStatisticDTO sellerStatisticDTO) {
+	public void updateSellerStatistics(SellerStatisticDTO sellerStatisticDTO) {
 
 		ProfileStatisticsEntity oldProfileStatisticsEntity
 			= profileStatisticsRepository.findByMemberUUID(sellerStatisticDTO.getMemberUUID());
@@ -52,7 +52,7 @@ public class ProfileStatisticsPersistenceByJpa implements ProfileStatisticsPersi
 			.rank(sellerStatisticDTO.getRank() != null ? sellerStatisticDTO.getRank() :
 				oldProfileStatisticsEntity.getRank())
 			.build();
-		
+
 		profileStatisticsRepository.save(updatedProfileStatisticsEntity);
 	}
 }
