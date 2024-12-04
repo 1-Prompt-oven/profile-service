@@ -34,7 +34,7 @@ public class ProfileAggregateTraceService {
 		}
 	}
 
-	@Scheduled(fixedRate = 60000 * 60) // Runs every 1 hour
+	@Scheduled(cron = "0 0 1 * * *") // Runs at 01:00 UTC daily
 	public void applyAllProfileViewCounts() {
 		log.info("Starting scheduled profile view count application");
 		try {
