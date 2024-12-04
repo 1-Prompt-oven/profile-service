@@ -9,8 +9,10 @@ import com.promptoven.profileservice.adaptor.jpa.entity.ProfileEntity;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
+	@Query("select p from ProfileEntity  p where p.memberUUID = :memberUUID and p.isWithdrew=false and p.isBanned = false")
 	ProfileEntity findByMemberUUID(String memberUUID);
 
+	@Query("select p from ProfileEntity p where p.nickname = :nickname and p.isBanned=false and p.isWithdrew=false")
 	ProfileEntity findByNickname(String nickname);
 
 	List<ProfileEntity> findByNicknameContaining(String nickname);
