@@ -53,11 +53,7 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public String getProfileID(String nickname) {
-		String profileID = profileRepository.findIDByNickname(nickname);
-		if (null == profileID) {
-			return null;
-		}
-		return profileID;
+		return profileRepository.findIDByNickname(nickname);
 	}
 
 	@Override
