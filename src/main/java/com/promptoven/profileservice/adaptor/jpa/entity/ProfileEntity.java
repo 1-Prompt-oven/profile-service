@@ -36,8 +36,10 @@ public class ProfileEntity {
 	private LocalDateTime createdAt;
 
 	@Nullable
+	@Column(length = 400)
 	private String banner;
 	@Nullable
+	@Column(length = 400)
 	private String profileImage;
 	@Nullable
 	private String hashtag;
