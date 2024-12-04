@@ -122,7 +122,7 @@ public class ProfileRestController {
 		return new BaseResponse<>(profileShortResponseVO);
 	}
 
-	@GetMapping("/profile/pricture/{memberUUID}")
+	@GetMapping("/profile/picture/{memberUUID}")
 	public BaseResponse<ProfilePictureResponseVO> getProfileImage(@PathVariable String memberUUID) {
 		ProfilePictureResponseVO profilePictureResponseVO = ProfileResponseMapper.toPictureVO(
 			profileUseCase.getPicture(memberUUID));
