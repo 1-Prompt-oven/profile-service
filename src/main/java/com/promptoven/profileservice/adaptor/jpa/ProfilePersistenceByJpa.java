@@ -80,9 +80,12 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 			.collect(Collectors.toList());
 		return Stream.of(nicknameSearchResult, hashtagSearchResult, bioSearchResult)
 			.flatMap(List::stream)
-			.distinct()
-			.collect(Collectors.toList());
-
+			.collect(Collectors.collectingAndThen(
+				Collectors.groupingBy(ProfileDTO::getMemberUUID),
+				map -> map.values().stream()
+					.map(list -> list.get(0))
+					.collect(Collectors.toList())
+			));
 	}
 
 	@Override
