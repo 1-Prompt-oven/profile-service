@@ -22,7 +22,7 @@ public class ProfileAggregateTraceService {
 	private final ProfilePersistence profilePersistence;
 	private final ProfileStatisticsPersistence profileStatisticsPersistence;
 
-	public void applySellingCounts(String profileId) {
+	private void applySellingCounts(String profileId) {
 		SellerStatisticDTO extractedSellerStatisticDTO = sellerBatchInfoRequest.getStatistics(profileId);
 		if (null != extractedSellerStatisticDTO.getMemberUUID()) {
 			SellerStatisticDTO sellerStatisticDTO = SellerStatisticDTO.builder()
@@ -35,7 +35,7 @@ public class ProfileAggregateTraceService {
 	}
 
 	@Scheduled(cron = "0 0 2 * * *") // Runs at 02:00 UTC daily
-	public void applyAllProfileViewCounts() {
+	private void applyAllProfileSellingCounts() {
 		try {
 			if (sellerBatchInfoRequest.checkHealth()) {
 				profilePersistence.getAllProfileIDs()

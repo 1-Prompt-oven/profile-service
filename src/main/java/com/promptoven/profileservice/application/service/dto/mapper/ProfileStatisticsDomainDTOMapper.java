@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.promptoven.profileservice.application.service.dto.ProfileStatisticsDTO;
 import com.promptoven.profileservice.domain.ProfileStatistics;
+import com.promptoven.profileservice.domain.dto.ProfileStatisticsModelDTO;
 
 @Component
 public class ProfileStatisticsDomainDTOMapper implements DomainDTOMapper<ProfileStatistics, ProfileStatisticsDTO> {
@@ -22,6 +23,16 @@ public class ProfileStatisticsDomainDTOMapper implements DomainDTOMapper<Profile
 	@Override
 	public ProfileStatistics toDomain(ProfileStatisticsDTO dto) {
 		return ProfileStatistics.builder()
+			.memberUUID(dto.getMemberUUID())
+			.viewer(dto.getViewer())
+			.sales(dto.getSales())
+			.rank(dto.getRank())
+			.rating(dto.getRating())
+			.build();
+	}
+
+	public ProfileStatisticsModelDTO toModelDTO(ProfileStatisticsDTO dto) {
+		return ProfileStatisticsModelDTO.builder()
 			.memberUUID(dto.getMemberUUID())
 			.viewer(dto.getViewer())
 			.sales(dto.getSales())
