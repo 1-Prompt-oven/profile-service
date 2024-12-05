@@ -2,6 +2,7 @@ package com.promptoven.profileservice.application.service;
 
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -115,7 +116,18 @@ public class ProfileCommonService implements ProfileCommonUsecase {
 
 	@Override
 	public List<ProfileShortDTO> search(String query) {
-		return profilePersistence.search(query).stream()
+		if (query == null) {
+			return List.of();
+		}
+		// Sanitize and validate the query
+		String safeQuery = query.trim()
+			.replaceAll("[%_]", "\\\\$0"); // Escape SQL LIKE special characters
+		
+		if (safeQuery.isEmpty()) {
+			return List.of();
+		}
+		
+		return profilePersistence.search(safeQuery).stream()
 			.filter(Objects::nonNull)
 			.map(profileDomainDTOMapper::toShortDTO)
 			.toList();
