@@ -38,7 +38,7 @@ public class SellerBatchInfoRequestByWebclient implements SellerBatchInfoRequest
 			.onErrorResume(WebClientResponseException.class, ex -> {
 				// Log the error and provide a fallback response
 				log.warn("Error occurred: " + ex.getMessage());
-				return Mono.just(new SellerStatisticDTO(null, null, null));
+				return Mono.just(new SellerStatisticDTO(null, null, null, null));
 			})
 			.block(); // Convert reactive to blocking
 	}
@@ -46,13 +46,13 @@ public class SellerBatchInfoRequestByWebclient implements SellerBatchInfoRequest
 	@Override
 	public boolean checkHealth() {
 		try {
-			return webClient.get()
+			return Boolean.TRUE.equals(webClient.get()
 				.uri("/v1/seller-batch/aggregate/health-check-test")
 				.retrieve()
 				.toBodilessEntity()
 				.map(response -> response.getStatusCode().is2xxSuccessful())
 				.onErrorReturn(false)
-				.block();
+				.block());
 		} catch (Exception e) {
 			return false;
 		}

@@ -46,10 +46,11 @@ public class ProfileStatisticsPersistenceByJpa implements ProfileStatisticsPersi
 			.Id(oldProfileStatisticsEntity.getId())
 			.memberUUID(oldProfileStatisticsEntity.getMemberUUID())
 			.viewer(oldProfileStatisticsEntity.getViewer())
-			.rating(oldProfileStatisticsEntity.getRating())
-			.sales(sellerStatisticDTO.getSales() != null ? sellerStatisticDTO.getSales() :
+			.rating(null != sellerStatisticDTO.getReviewAvg() ? sellerStatisticDTO.getReviewAvg() :
+				oldProfileStatisticsEntity.getRating())
+			.sales(null != sellerStatisticDTO.getSales() ? sellerStatisticDTO.getSales() :
 				oldProfileStatisticsEntity.getSales())
-			.rank(sellerStatisticDTO.getRank() != null ? sellerStatisticDTO.getRank() :
+			.rank(null != sellerStatisticDTO.getRank() ? sellerStatisticDTO.getRank() :
 				oldProfileStatisticsEntity.getRank())
 			.build();
 

@@ -12,4 +12,5 @@ public class SellerStatisticDTO {
 	private final String memberUUID;
 	private final Long sales;
 	private final Long rank;
+	private final Double reviewAvg;
 }

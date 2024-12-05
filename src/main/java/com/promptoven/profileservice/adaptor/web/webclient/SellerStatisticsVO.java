@@ -14,4 +14,5 @@ public class SellerStatisticsVO {
 	private String memberUuid;
 	private Long ranking;
 	private Long sellsCount;
+	private Double reviewAvg;
 }

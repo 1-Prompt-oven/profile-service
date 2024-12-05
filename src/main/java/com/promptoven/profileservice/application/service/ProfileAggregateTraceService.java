@@ -29,6 +29,7 @@ public class ProfileAggregateTraceService {
 				.memberUUID(profileId)
 				.rank(extractedSellerStatisticDTO.getRank())
 				.sales(extractedSellerStatisticDTO.getSales())
+				.reviewAvg(extractedSellerStatisticDTO.getReviewAvg())
 				.build();
 			profileStatisticsPersistence.updateSellerStatistics(sellerStatisticDTO);
 		}

@@ -4,11 +4,12 @@ import com.promptoven.profileservice.application.port.out.dto.SellerStatisticDTO
 
 class DtoVoMapper {
 
-	static final SellerStatisticDTO toDTO(SellerStatisticsVO sellerStatisticsVO) {
+	static SellerStatisticDTO toDTO(SellerStatisticsVO sellerStatisticsVO) {
 		return SellerStatisticDTO.builder()
 			.memberUUID(sellerStatisticsVO.getMemberUuid())
 			.rank(sellerStatisticsVO.getRanking())
 			.sales(sellerStatisticsVO.getSellsCount())
+			.reviewAvg(sellerStatisticsVO.getReviewAvg())
 			.build();
 	}
 }
