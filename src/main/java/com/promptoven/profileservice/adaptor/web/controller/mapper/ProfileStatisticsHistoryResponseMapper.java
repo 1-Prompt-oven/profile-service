@@ -5,6 +5,9 @@ import com.promptoven.profileservice.application.service.dto.ProfileStatisticsHi
 
 public class ProfileStatisticsHistoryResponseMapper {
 	public static ProfileStatisticsHistoryResponseVO toVO(ProfileStatisticsHistoryDTO dto) {
+		if (null == dto) {
+			return null;
+		}
 		return ProfileStatisticsHistoryResponseVO.builder()
 			.targetDate(dto.getTargetDate())
 			.memberUUID(dto.getMemberUUID())

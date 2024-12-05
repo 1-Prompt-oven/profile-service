@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileStatisticsHistoryResponseMapper;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileStatisticsHistoryResponseVO;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponse;
+import com.promptoven.profileservice.adaptor.web.util.BaseResponseStatus;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileStatisticsHistoryUsecase;
 
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,11 @@ public class ProfileStatisticHistoryController {
 	@GetMapping("/{memberUUID}/{targetDate}")
 	public BaseResponse<ProfileStatisticsHistoryResponseVO> getHistory(
 		@PathVariable String memberUUID, @PathVariable LocalDate targetDate) {
-
-		return new BaseResponse<>(ProfileStatisticsHistoryResponseMapper.toVO(
-			profileStatisticsHistoryUsecase.getProfileStatisticsHistory(memberUUID, targetDate)));
+		ProfileStatisticsHistoryResponseVO profileStatisticsHistoryResponseVO = ProfileStatisticsHistoryResponseMapper.toVO(
+			profileStatisticsHistoryUsecase.getProfileStatisticsHistory(memberUUID, targetDate));
+		if (null == profileStatisticsHistoryResponseVO) {
+			return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_DATA);
+		}
+		return new BaseResponse<>(profileStatisticsHistoryResponseVO);
 	}
 }
