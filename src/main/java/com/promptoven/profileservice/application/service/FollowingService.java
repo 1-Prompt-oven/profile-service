@@ -54,13 +54,14 @@ public class FollowingService implements FollowingUsecase {
 
 	@Override
 	public boolean isFollowing(IsFollowingRequestDTO isFollowingRequestDTO) {
-		String followerNickname = profilePersistence.getProfileID(isFollowingRequestDTO.getFollower());
-		String followeeNickname = profilePersistence.getProfileID(isFollowingRequestDTO.getFollowee());
-		return followingPersistence.isFollowing(followerNickname, followeeNickname);
+		String follower = profilePersistence.getProfileID(isFollowingRequestDTO.getFollower());
+		String followee = profilePersistence.getProfileID(isFollowingRequestDTO.getFollowee());
+		return followingPersistence.isFollowing(follower, followee);
 	}
 
 	@Override
-	public List<ProfileShortDTO> getFollowers(String followee) {
+	public List<ProfileShortDTO> getFollowers(String followeeNickname) {
+		String followee = profilePersistence.getProfileID(followeeNickname);
 		List<String> followers = followingPersistence.getFollowers(followee);
 		return followers.stream()
 			.map(profilePersistence::read)
@@ -71,7 +72,8 @@ public class FollowingService implements FollowingUsecase {
 	}
 
 	@Override
-	public List<ProfileShortDTO> getFollowing(String follower) {
+	public List<ProfileShortDTO> getFollowing(String followerNickname) {
+		String follower = profilePersistence.getProfileID(followerNickname);
 		List<String> followings = followingPersistence.getFollowings(follower);
 		return followings.stream()
 			.map(profilePersistence::read)
