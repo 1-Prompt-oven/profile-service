@@ -90,11 +90,7 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 
 	@Override
 	public String getPicture(String memberUUID) {
-		String picture = profileRepository.findPictureByID(memberUUID);
-		if (null == picture) {
-			return null;
-		}
-		return picture;
+		return profileRepository.findPictureByID(memberUUID);
 	}
 
 }
