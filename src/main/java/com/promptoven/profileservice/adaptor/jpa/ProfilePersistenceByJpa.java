@@ -83,7 +83,7 @@ public class ProfilePersistenceByJpa implements ProfilePersistence {
 			.collect(Collectors.collectingAndThen(
 				Collectors.groupingBy(ProfileDTO::getMemberUUID),
 				map -> map.values().stream()
-					.map(list -> list.getFirst())
+					.map(List::getFirst)
 					.collect(Collectors.toList())
 			));
 	}
