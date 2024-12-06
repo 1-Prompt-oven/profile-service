@@ -39,8 +39,8 @@ public class Profile {
 			.nickname(profileModelDTO.getNickname())
 			.createdAt(LocalDateTime.now())
 
-			.banner(null != profileModelDTO.getBanner() ? profileModelDTO.getBanner() : null)
-			.profileImage(null != profileModelDTO.getProfileImage() ? profileModelDTO.getProfileImage() : null)
+			.banner(null != profileModelDTO.getBanner() ? profileModelDTO.getBanner() : "")
+			.profileImage(null != profileModelDTO.getProfileImage() ? profileModelDTO.getProfileImage() : "")
 			.hashtag(null != profileModelDTO.getHashtag() ? profileModelDTO.getHashtag() : null)
 			.bio(null != profileModelDTO.getBio() ? profileModelDTO.getBio() : null)
 			.email(null != profileModelDTO.getEmail() ? profileModelDTO.getEmail() : null)
