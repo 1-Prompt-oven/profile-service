@@ -1,10 +1,12 @@
 package com.promptoven.profileservice.application.port.in.usecase;
 
-import java.time.LocalDate;
+import java.util.List;
 
+import com.promptoven.profileservice.application.port.in.dto.ProfileStatisticsHistoryRequestDTO;
 import com.promptoven.profileservice.application.service.dto.ProfileStatisticsHistoryDTO;
 
 public interface ProfileStatisticsHistoryUsecase {
 
-	ProfileStatisticsHistoryDTO getProfileStatisticsHistory(String memberUUID, LocalDate targetDate);
+	List<ProfileStatisticsHistoryDTO> getProfileStatisticsHistory(
+		ProfileStatisticsHistoryRequestDTO profileStatisticsHistoryRequestDTO);
 }

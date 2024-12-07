@@ -1,7 +1,9 @@
 package com.promptoven.profileservice.adaptor.jpa;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import com.promptoven.profileservice.adaptor.jpa.entity.ProfileStatisticsHistoryEntity;
@@ -26,16 +28,17 @@ public class ProfileStatisticsHistoryPersistenceByJpa implements ProfileStatisti
 	}
 
 	@Override
-	public ProfileStatisticsHistoryDTO get(LocalDate targetDate, String targetUUID) {
+	public List<ProfileStatisticsHistoryDTO> get(Pair<LocalDate, LocalDate> range, String targetUUID) {
 
-		ProfileStatisticsHistoryEntity profileStatisticsHistoryEntity
-			= profileStatisticsHistoryRepository.findByMemberUUIDAndTargetDate(targetUUID, targetDate);
+		LocalDate beginDate = range.getFirst();
+		LocalDate endDate = range.getSecond();
 
-		if (null == profileStatisticsHistoryEntity) {
-			return null;
-		}
-		return JpaProfileStatisticsHistoryDTOEntityMapper
-			.toDTO(profileStatisticsHistoryEntity);
+		List<ProfileStatisticsHistoryEntity> profileStatisticsHistoryEntityList =
+			profileStatisticsHistoryRepository.findByMemberUUIDAndTargetDate(targetUUID, beginDate, endDate);
+
+		return profileStatisticsHistoryEntityList.stream()
+			.map(JpaProfileStatisticsHistoryDTOEntityMapper::toDTO)
+			.toList();
 	}
 
 	private static class JpaProfileStatisticsHistoryDTOEntityMapper {

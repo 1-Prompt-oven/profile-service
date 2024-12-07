@@ -1,11 +1,14 @@
 package com.promptoven.profileservice.application.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.promptoven.profileservice.application.port.in.dto.ProfileStatisticsHistoryRequestDTO;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileStatisticsHistoryUsecase;
 import com.promptoven.profileservice.application.port.out.call.FollowingPersistence;
 import com.promptoven.profileservice.application.port.out.call.ProfilePersistence;
@@ -51,7 +54,13 @@ public class ProfileStatisticsHistoryService implements ProfileStatisticsHistory
 	}
 
 	@Override
-	public ProfileStatisticsHistoryDTO getProfileStatisticsHistory(String memberUUID, LocalDate targetDate) {
-		return profileStatisticsHistoryPersistence.get(targetDate, memberUUID);
+	public List<ProfileStatisticsHistoryDTO> getProfileStatisticsHistory(
+		ProfileStatisticsHistoryRequestDTO requestDTO) {
+		Pair<LocalDate, LocalDate> range = queryRange(requestDTO.getBeginDate(), requestDTO.getEndDate());
+		return profileStatisticsHistoryPersistence.get(range, requestDTO.getMemberUUID());
+	}
+
+	Pair<LocalDate, LocalDate> queryRange(LocalDate begin, LocalDate end) {
+		return Pair.of(begin, end);
 	}
 }
