@@ -13,6 +13,7 @@ import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileStatis
 import com.promptoven.profileservice.adaptor.web.controller.mapper.ProfileStatisticsHistoryResponseMapper;
 import com.promptoven.profileservice.adaptor.web.controller.vo.out.ProfileStatisticsHistoryResponseVO;
 import com.promptoven.profileservice.adaptor.web.util.BaseResponse;
+import com.promptoven.profileservice.adaptor.web.util.BaseResponseStatus;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileStatisticsHistoryUsecase;
 
 import lombok.RequiredArgsConstructor;
@@ -28,13 +29,19 @@ public class ProfileStatisticHistoryController {
 
 	@GetMapping("/{memberUUID}/{beginDate}/{endDate}")
 	public BaseResponse<List<ProfileStatisticsHistoryResponseVO>> getHistory(
-		@PathVariable String memberUUID, @PathVariable LocalDate beginDate, @PathVariable LocalDate endDate) {
-		List<ProfileStatisticsHistoryResponseVO> responseVOList = profileStatisticsHistoryUsecase.getProfileStatisticsHistory(
-			ProfileStatisticsHistoryRequestMapper.toDTO(memberUUID, queryRange(beginDate, endDate))).stream().map(
-			ProfileStatisticsHistoryResponseMapper::toVO).toList();
-		return new BaseResponse<>(responseVOList);
+		@PathVariable String memberUUID, @PathVariable String beginDate, @PathVariable String endDate) {
+		try {
+			Pair<LocalDate, LocalDate> range = queryRange(LocalDate.parse(beginDate), LocalDate.parse(endDate));
+			List<ProfileStatisticsHistoryResponseVO> responseVOList = profileStatisticsHistoryUsecase.getProfileStatisticsHistory(
+				ProfileStatisticsHistoryRequestMapper.toDTO(memberUUID, range)).stream().map(
+				ProfileStatisticsHistoryResponseMapper::toVO).toList();
+			return new BaseResponse<>(responseVOList);
+		} catch (Exception e) {
+			log.error("Error while parsing date", e);
+			return new BaseResponse<>(BaseResponseStatus.BAD_REQUEST);
+		}
 	}
-
+	
 	Pair<LocalDate, LocalDate> queryRange(LocalDate begin, LocalDate end) {
 		return Pair.of(begin, end);
 	}
