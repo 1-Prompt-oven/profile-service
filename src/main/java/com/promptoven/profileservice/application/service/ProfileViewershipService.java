@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.promptoven.profileservice.application.port.in.usecase.ProfileViewershipUsecase;
 import com.promptoven.profileservice.application.port.out.call.ProfilePersistence;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProfileViewershipService implements ProfileViewershipUsecase {
 
 	private final ProfileViewershipMemory profileViewershipMemory;

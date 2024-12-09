@@ -1,6 +1,7 @@
 package com.promptoven.profileservice.application.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.promptoven.profileservice.application.port.in.dto.event.MemberBanEvent;
 import com.promptoven.profileservice.application.port.in.dto.event.MemberNicknameUpdateEvent;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class ProfileAdminService implements ProfileAdminUsecase {
 
 	private final ProfilePersistence profilePersistence;

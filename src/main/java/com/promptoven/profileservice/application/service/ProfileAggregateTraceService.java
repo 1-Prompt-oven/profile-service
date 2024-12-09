@@ -1,9 +1,11 @@
 package com.promptoven.profileservice.application.service;
 
+import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.promptoven.profileservice.application.port.out.call.ProfilePersistence;
 import com.promptoven.profileservice.application.port.out.call.ProfileStatisticsPersistence;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProfileAggregateTraceService {
 
 	private final SellerBatchInfoRequest sellerBatchInfoRequest;
@@ -23,7 +26,8 @@ public class ProfileAggregateTraceService {
 	private final ProfileStatisticsPersistence profileStatisticsPersistence;
 
 	private void applySellingCounts(String profileId) {
-		SellerStatisticDTO extractedSellerStatisticDTO = sellerBatchInfoRequest.getStatistics(profileId);
+		SellerStatisticDTO extractedSellerStatisticDTO =
+			sellerBatchInfoRequest.getStatistics(profileId, LocalDate.now());
 		if (null != extractedSellerStatisticDTO.getMemberUUID()) {
 			SellerStatisticDTO sellerStatisticDTO = SellerStatisticDTO.builder()
 				.memberUUID(profileId)

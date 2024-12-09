@@ -1,6 +1,7 @@
 package com.promptoven.profileservice.adaptor.web.webclient;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,9 +25,9 @@ public class SellerBatchInfoRequestByWebclient implements SellerBatchInfoRequest
 	}
 
 	@Override
-	public SellerStatisticDTO getStatistics(String memberUUID) {
+	public SellerStatisticDTO getStatistics(String memberUUID, LocalDate date) {
 		return webClient.get()
-			.uri("/v1/seller-batch/aggregate/{memberUuid}", memberUUID)
+			.uri("/v1/seller-batch/aggregate/{memberUuid}?{date}", memberUUID, date)
 			.retrieve()
 			.onStatus(status -> status.is4xxClientError() || status.is5xxServerError(),
 				clientResponse -> clientResponse.bodyToMono(String.class)
@@ -47,7 +48,7 @@ public class SellerBatchInfoRequestByWebclient implements SellerBatchInfoRequest
 	public boolean checkHealth() {
 		try {
 			return Boolean.TRUE.equals(webClient.get()
-				.uri("/v1/seller-batch/aggregate/health-check-test")
+				.uri("/v1/seller-batch/aggregate/health-check-test?date=2024-12-07")
 				.retrieve()
 				.toBodilessEntity()
 				.map(response -> response.getStatusCode().is2xxSuccessful())
