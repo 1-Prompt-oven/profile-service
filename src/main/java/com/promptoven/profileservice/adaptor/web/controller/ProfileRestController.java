@@ -26,6 +26,7 @@ import com.promptoven.profileservice.application.port.in.dto.ProfileResponseDTO;
 import com.promptoven.profileservice.application.port.in.usecase.FollowingUsecase;
 import com.promptoven.profileservice.application.port.in.usecase.ProfileCommonUsecase;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -99,6 +100,7 @@ public class ProfileRestController {
 			.toList());
 	}
 
+	@Operation(description = "닉네임 - 닉네임으로 팔로워 후보가 대상을 팔로우하는지 true-false 반환")
 	@GetMapping("/profile/relation/{follower}/{followee}")
 	public BaseResponse<Boolean> isFollowing(@PathVariable String follower, @PathVariable String followee) {
 		IsFollowingRequestVO isFollowingRequestVO = IsFollowingRequestVO.builder()
